@@ -1,0 +1,34 @@
+import mongoose from "mongoose";
+
+let Schema = mongoose.Schema;
+
+// lưu thông tin về 1 tài khoản của người dùng
+let UserSchema = new Schema({
+    username: String,                                       // tên người dùng, tên đăng nhập
+    gender: {type: String, default: "male"},                // giới tính, mặc định là male
+    phone: {type: Number, default: null},                   // số điện thoại, mặc định là null
+    address: {type: String, default: null},                 // địa chỉ, mặc đinh là null
+    avatar: {type: String, default: "avatar-default.jpg"},  // link ảnh đại diện, có ảnh đại diện mặc định
+    role: {type: String, default: "user"},                  // quyền của tại khoản, mặc định là user
+    local: {                                                // tài khoản nhập khi tạo tài khoản
+        email: {type: String, trim: true},
+        password: String,
+        isActive: {type: Boolean, default: false},
+        verifyToken: String
+    },
+    facebook: {                                             // tài khoản đăng nhập bằng facebook
+        uid: String,
+        token: String,
+        email: {type: String, trim: true}
+    },
+    google: {                                               // tài khoản đăng nhập bằng google
+        uid: String,
+        token: String,
+        email: {type: String, trim: true}
+    },
+    createdAt: {type: Number, default: Date.now},           // ngày tạo, mặc định là thời gian khởi tạo
+    updatedAt: {type: Number, default: null},               // ngày cập nhập, mặc định là null
+    deletedAt: {type: Number, default: null}                // ngày xóa, mặc định là null
+});
+
+module.exports = mongoose.model("user", UserSchema);

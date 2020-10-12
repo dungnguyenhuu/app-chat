@@ -2,6 +2,7 @@ import express from "express";
 import ConnectDB from "./config/connectDB";
 import ContactModel from "./model/contact.model";
 import ConfigViewEngine from "./config/viewEngine";
+import initRoutes from "./routes/web";
 
 // khởi tại app
 let app = express();
@@ -12,16 +13,11 @@ let app = express();
 // tạo view engine
 ConfigViewEngine(app);
 
+// tạo routes
+initRoutes(app);
+
 let hostname = "localhost";
 let port = 8888;
-
-app.get("/", (req, res) => {
-    return res.render("main/master");
-});
-
-app.get("/login-register", (req, res) => {
-    return res.render("auth/loginRegister");
-});
 
 app.listen(port, hostname, () => {
     console.log(`running ${hostname}: ${port}`);

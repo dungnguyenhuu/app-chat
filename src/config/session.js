@@ -30,7 +30,7 @@ let configSession = (app) => {
         resave: true,
         saveUninitialized: false,
         cookie: {
-            maxAge: 1000*60*60*12 // 1day
+            maxAge: 1000*60*15 // 15min
         }
     }));
 };

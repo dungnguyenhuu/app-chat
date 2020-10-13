@@ -3,6 +3,7 @@ import ConnectDB from "./config/connectDB";
 import ContactModel from "./model/contact.model";
 import ConfigViewEngine from "./config/viewEngine";
 import initRoutes from "./routes/web";
+import bodyParser from "body-parser";
 
 // khởi tại app
 let app = express();
@@ -12,6 +13,9 @@ let app = express();
 
 // tạo view engine
 ConfigViewEngine(app);
+
+// enable post data for request
+app.use(bodyParser.urlencoded({extended: true}));
 
 // tạo routes
 initRoutes(app);

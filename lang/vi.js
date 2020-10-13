@@ -9,10 +9,15 @@ export const transErrors = {
     account_in_use: "Email này đã được sử dụng.",
     account_remove: "Tài khoản đã bị xóa",
     account_not_active: "Email đã được đăng ký nhưng chưa được kích hoạt. Kiểm tra lại email",
+    login_failed: "Sai tài khoản hoặc mật khẩu.",
+    server_error: "Có lỗi ở phía máy chủ",
 };
 
 export const transSuccess = {
     userCreated: (userEmail) => {
         return `Tài khoản <strong>${userEmail}</strong> đã được tạo.`;
-    }
+    },
+    login_success: (username) => {
+        return `${username} đăng nhập thành công.`
+    },
 };

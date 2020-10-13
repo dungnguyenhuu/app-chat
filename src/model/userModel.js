@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+// import bcrypt from "bcrypt"; mã hóa password
 
 let Schema = mongoose.Schema;
 
@@ -13,7 +14,7 @@ let UserSchema = new Schema({
     local: {                                                // tài khoản nhập khi tạo tài khoản
         email: {type: String, trim: true},
         password: String,
-        isActive: {type: Boolean, default: false},
+        isActive: {type: Boolean, default: true},
         verifyToken: String
     },
     facebook: {                                             // tài khoản đăng nhập bằng facebook
@@ -41,7 +42,21 @@ UserSchema.statics = {
     // tìm kiếm theo email
     findByEmail(email) {
         return this.findOne({"local.email": email}).exec();
-    }
+    },
+
+    // tìm kiếm theo id
+    findUserById(id){
+        // console.log(id);
+        return this.findById(id).exec();
+    },
 };
+
+UserSchema.methods = {
+    //so sanh password
+    comparePassword (password) {
+        // return bcrypt.compare(password, this.local.password); return promise 
+        return password === this.local.password;
+    }
+}
 
 module.exports = mongoose.model("user", UserSchema);

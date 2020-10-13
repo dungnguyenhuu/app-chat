@@ -31,4 +31,17 @@ let UserSchema = new Schema({
     deletedAt: {type: Number, default: null}                // ngày xóa, mặc định là null
 });
 
+// các hàm thao tác với bảng user trên MongoDB
+UserSchema.statics = {
+    // tạo bản ghi mới
+    createNew(item) {
+        return this.create(item);
+    },
+
+    // tìm kiếm theo email
+    findByEmail(email) {
+        return this.findOne({"local.email": email}).exec();
+    }
+};
+
 module.exports = mongoose.model("user", UserSchema);

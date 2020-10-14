@@ -145,7 +145,7 @@ function cancelCreateGroup() {
 // function flashMasterNotify() {
 //   let notify = $(".master-success-message").text();
 //   if (notify.length){
-//     alertify.notify(notify, "sucsess", 5);
+//     alertify.notify(notify, "success", 5);
 //   }
 // };
 

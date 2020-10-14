@@ -1,5 +1,5 @@
 import multer from "multer";
-import {app} from "./../config/app";
+import {appConfig} from "./../config/appConfig";
 import {transErrors, transSuccess} from "./../../lang/vi";
 import uuidv4 from "uuid/v4";
 import {user} from "./../services/index";
@@ -9,10 +9,10 @@ import fsExtra from "fs-extra";
 let storageAvatar = multer.diskStorage({
     destination: (req, file, callback) => {
         // callback(error, seccess);
-        callback(null, app.avatar_directory);
+        callback(null, appConfig.avatar_directory);
     },
     filename: (req, file, callback) => {
-        let math = app.avatar_type;
+        let math = appConfig.avatar_type;
         if (math.indexOf(file.mimetype) === -1) {
             return callback(transErrors.avatar_type, null);
         };
@@ -24,7 +24,7 @@ let storageAvatar = multer.diskStorage({
 
 let avatartUploadFile = multer({
     storage: storageAvatar,
-    limits: {fileSize: app.avatar_limit_size},
+    limits: {fileSize: appConfig.avatar_limit_size},
 }).single("avatar");
 
 let updateAvatar = (req, res) => {
@@ -46,7 +46,7 @@ let updateAvatar = (req, res) => {
 
             // xóa ảnh user cũ
             if(userUpdate.avatar !== "avatar-default.jpg") {
-                await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
+                await fsExtra.remove(`${appConfig.avatar_directory}/${userUpdate.avatar}`);
             };
 
 

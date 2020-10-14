@@ -1,19 +1,12 @@
 import session from "express-session";
 import connectMongo from "connect-mongo";
-
+import { appConfig } from "./appConfig";
+ 
 let MongoStore = connectMongo(session);
-
-let DB_CONNECTION = "mongodb";
-let DB_HOST = "localhost";
-let DB_PORT = 27017;
-let DB_NAME = "app_chat";
-let DB_USERNAME = "";
-let DB_PASSWORD = "";
-
 
 /* this variable is where save session, in this case is mongodb */
 let sessionStore = new MongoStore({
-    url: `${DB_CONNECTION}://${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+    url: `${appConfig.DB_CONNECTION}://${appConfig.DB_HOST}:${appConfig.DB_PORT}/${appConfig.DB_NAME}`,
     autoReconnect: true,
     // autoRemove: "native"
 });

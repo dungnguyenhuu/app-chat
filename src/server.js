@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 import connectFlash from "connect-flash";
 import configSession from "./config/session";
 import passport from "passport";
+import {appConfig} from "./config/appConfig";
 
 
 // khởi tại app
@@ -33,9 +34,6 @@ app.use(passport.session());
 // tạo routes
 initRoutes(app);
 
-let hostname = "localhost";
-let port = 8888;
-
-app.listen(port, hostname, () => {
-    console.log(`running ${hostname}: ${port}`);
+app.listen(appConfig.port, appConfig.hostname, () => {
+    console.log(`running ${appConfig.hostname}: ${appConfig.port}`);
 });

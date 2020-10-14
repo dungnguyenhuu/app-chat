@@ -11,6 +11,8 @@ export const transErrors = {
     account_not_active: "Email đã được đăng ký nhưng chưa được kích hoạt. Kiểm tra lại email",
     login_failed: "Sai tài khoản hoặc mật khẩu.",
     server_error: "Có lỗi ở phía máy chủ",
+    avatar_type: "Kiểu file không hợp lệ, chỉ chấp nhận jpg, png.",
+    avatar_size: "Ảnh upload tối đa 1MB",
 };
 
 export const transSuccess = {
@@ -20,5 +22,6 @@ export const transSuccess = {
     login_success: (username) => {
         return `${username} đăng nhập thành công.`
     },
-    logout_success: "Đăng xuất thành công."
+    logout_success: "Đăng xuất thành công.",
+    avatar_updated: "Cập nhập thông tin thành công",
 };

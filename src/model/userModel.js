@@ -49,6 +49,12 @@ UserSchema.statics = {
         // console.log(id);
         return this.findById(id).exec();
     },
+
+    // cập nhập 
+    updateUser(id, item) {
+        // mongo khi update sẽ trả về dữ liệu cũ
+        return this.findByIdAndUpdate(id, item).exec();
+    },
 };
 
 UserSchema.methods = {

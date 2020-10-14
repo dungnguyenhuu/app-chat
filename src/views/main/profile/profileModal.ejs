@@ -27,15 +27,15 @@
                                 </div>
                                 <!-- edit form column -->
                                 <div class="col-md-9 personal-info">
-                                    <div class="alert alert-danger alert-dismissable">
+                                    <div class="alert alert-danger alert-dismissable user-modal-alert-error">
                                         <a class="panel-close close" data-dismiss="alert">×</a>
-                                        Update user error example.<br>
+                                        <span>Update user error example.</span>
                                         <!-- <script>openProfileModal();</script> -->
                                     </div>
 
-                                    <div class="alert alert-success alert-dismissable">
+                                    <div class="alert alert-success alert-dismissable user-modal-alert-success">
                                         <a class="panel-close close" data-dismiss="alert">×</a>
-                                        Update user success example.<br>
+                                        <span>Update user success example.</span>
                                         <!-- <script>openProfileModal();</script> -->
                                     </div>
 
@@ -71,7 +71,7 @@
                                     <div class="form-group">
                                         <label class="col-md-3 control-label">Username:</label>
                                         <div class="col-md-8">
-                                            <input id="input-change-username" class="form-control" type="text" name="username" value="<%= user.username %>">
+                                            <input id="input-change-username" class="form-control" type="text" name="username" value="<%= user.username %>" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -104,7 +104,7 @@
                                         <div class="col-md-8">
                                             <input type="button" id="input-btn-update-user" class="btn btn-primary custom-background-btn-primary" name="submit" value="Lưu lại">
                                             <span></span>
-                                            <input type="reset" id="input-btn-reset-user" class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
+                                            <input type="button" id="input-btn-reset-user" class="btn btn-default custom-background-btn-reset" value="Hủy bỏ">
                                         </div>
                                     </div>
                                 </div>

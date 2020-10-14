@@ -9,18 +9,18 @@ function updateProfle () {
         let limit = 1048576; // 1MB
 
         // kiểm tra đúng định dạng ảnh
-        if ($.inArray(fileData.type, math) === -1){
-            alertify.notify("Kiểu file không hợp lệ, chỉ chấp nhận jpg, png.", "error", 5);
-            $(this).val(null);
-            return false;
-        }
+        // if ($.inArray(fileData.type, math) === -1){
+        //     alertify.notify("Kiểu file không hợp lệ, chỉ chấp nhận jpg, png.", "error", 5);
+        //     $(this).val(null);
+        //     return false;
+        // }
 
         // kiểm tra kích thước ảnh
-        if (fileData.size > limit){
-            alertify.notify("Ảnh upload tối đa 1MB", "error", 5);
-            $(this).val(null);
-            return false;
-        }
+        // if (fileData.size > limit){
+        //     alertify.notify("Ảnh upload tối đa 1MB", "error", 5);
+        //     $(this).val(null);
+        //     return false;
+        // }
 
         // thực hiện upload ảnh
         if (typeof (FileReader) != "undefined"){
@@ -53,7 +53,12 @@ function updateProfle () {
     });
 
     $("#input-change-username").bind("change", function () {
-        userInfo.username = $(this).val();
+        if ($(this).val() === ""){
+            alertify.notify("Bạn chưa nhập đầy đủ thông tin", "error", 5);
+            return false;
+        }else{
+            userInfo.username = $(this).val();
+        }
     });
 
     $("#input-change-gender-male").bind("click", function () {
@@ -86,22 +91,38 @@ $(document).ready(function () {
         }
 
         $.ajax({
-            url: "/user/update-avatar",
+            url: "/profile/update-avatar",
             type: "put",
             cache: false,
             contentType: false,
             processData: false,
             data: userAvatar,
-            success: function (result) {  },
-            error: function (error) {  },
+            success: function (result) { 
+                // console.log(result);
+
+                // thông báo thành công
+                $(".user-modal-alert-success").find("span").text(result.message);
+                $(".user-modal-alert-success").css("display", "block");
+                // cập nhập ảnh đại diện trên navbar
+                $("#navbar-avatar").attr("src", result.imageSrc);
+                originAvatarSrc = result.imageSrc;
+                $("#input-btn-reset-user").click();
+             },
+            error: function (error) { 
+                // hiển thị lỗi
+                $(".user-modal-alert-error").find("span").text(error.responseText);
+                $(".user-modal-alert-error").css("display", "block");
+
+                // reset
+                $("#input-btn-reset-user").click();
+             },
         });
-        // console.log(userAvatar);
-        // console.log(userInfo);
     });
 
     $("#input-btn-reset-user").bind("click", function () {
         userAvatar = null;
         userInfo = {};
+        $("#input-change-avatar").val(null);
         $("#user-modal-avatar").attr("src", originAvatarSrc);
     });
 

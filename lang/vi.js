@@ -20,4 +20,5 @@ export const transSuccess = {
     login_success: (username) => {
         return `${username} đăng nhập thành công.`
     },
+    logout_success: "Đăng xuất thành công."
 };

@@ -1,6 +1,8 @@
 import {validationResult} from "express-validator/check";
 import {auth} from "./../services/index";
+import {transSuccess} from "./../../lang/vi";
 
+// hiện trang đăng kí đăng nhập
 let getLoginRegister = (req, res) => {
     return res.render("auth/master", {
         errors: req.flash("errors"),
@@ -8,6 +10,7 @@ let getLoginRegister = (req, res) => {
     });
 };
 
+// đăng ký
 let postRegister = async (req, res) => {
     let errorArr = [];
     let successArr = [];
@@ -41,12 +44,34 @@ let postRegister = async (req, res) => {
     }
 };
 
+// đăng xuất
 let getLogout = (req, res) => {
-    // do somthing
+    req.logout(); // xóa session passport 
+    req.flash("success", transSuccess.logout_success);
+    return res.redirect("/login-register");
 };
+
+// kiểm tra đăng nhập
+let checkLoggedIn = (req, res, next) => {
+    if(!req.isAuthenticated()){ // chưa đăng nhập thì về login-register
+        return res.redirect("/login-register");
+    }
+    next();
+}
+
+// kiểm tra đăng xuất
+let checkLoggedOut = (req, res, next) => {
+    if(req.isAuthenticated()){ // đã đăng nhập thì về home
+        return res.redirect("/");
+    }
+    next();
+}
 
 module.exports = {
     getLoginRegister: getLoginRegister,
     getLogout: getLogout,
-    postRegister: postRegister
+    postRegister: postRegister,
+    getLogout: getLogout,
+    checkLoggedIn: checkLoggedIn,
+    checkLoggedOut: checkLoggedOut,
 };

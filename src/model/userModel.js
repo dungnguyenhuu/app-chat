@@ -55,6 +55,12 @@ UserSchema.statics = {
         // mongo khi update sẽ trả về dữ liệu cũ
         return this.findByIdAndUpdate(id, item).exec();
     },
+
+
+    // cập nhập mật khẩu
+    updatePass (id, newPass){
+        return this.findByIdAndUpdate(id, {"local.password": newPass}).exec();
+    },
 };
 
 UserSchema.methods = {

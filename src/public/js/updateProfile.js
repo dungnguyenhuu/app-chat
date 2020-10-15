@@ -3,6 +3,8 @@ let userInfo = {};
 let originAvatarSrc = null;
 let originUserInfo = {};
 
+let userUpdatePass = {};
+
 function updateProfle () {
     // chọn ảnh đại diện
     $("#input-change-avatar").bind("change", function () {
@@ -57,7 +59,7 @@ function updateProfle () {
     // nhập tên username
     $("#input-change-username").bind("change", function () {
         let username = $(this).val();
-        // let regexUsername = new RegExp("^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$");
+        // let regexUsername = new RegExp(/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/);
 
         if(username.length < 3 || username.length > 17){
             alertify.notify("Username giới hạn trong khoảng 3 - 17 kí tự", "error", 5);
@@ -100,7 +102,7 @@ function updateProfle () {
     // nhập số điện thoại
     $("#input-change-phone").bind("change", function () {
         let phone = $(this).val();
-        let regexPhone = new RegExp("^(0)[0-9]{9,10}$");
+        let regexPhone = new RegExp(/^(0)[0-9]{9,10}$/);
         if(!regexPhone.test(phone)) {
             alertify.notify("Số điện thoại Việt Nam bắt đầu bằng số 0, giới hạn trong khoảng 10-11 kí tự", "error", 5);
             $(this).val(originUserInfo.phone);
@@ -125,8 +127,83 @@ function updateProfle () {
         userInfo.phone = $(this).val();
     });
 
-}
+    // nhập mật khấu cũ
+    $("#input-change-current-pass").bind("change", function () {
+        let currentPass = $(this).val();
+        let regexPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
+        if(!regexPass.test(currentPass) || currentPass.length < 8) {
+            alertify.notify("Mật khẩu cần chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữa thường, chữ số và ký tự. VD: Aa@12345", "error", 5);
+            $(this).val(null);
+            // xóa đi tránh lỗi khi nhập 2 lần liên tiếp
+            delete userUpdatePass.currentPass;
+            return false;
+        }
+        userUpdatePass.currentPass = currentPass;
+    });
 
+     // nhập mật khấu mới
+     $("#input-change-new-pass").bind("change", function () {
+        let newPass = $(this).val();
+        let regexPass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
+        if(!regexPass.test(newPass) || newPass.length < 8) {
+            alertify.notify("Mật khẩu cần chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữa thường, chữ số và ký tự. VD: Aa@12345", "error", 5);
+            $(this).val(null);
+            // xóa đi tránh lỗi khi nhập 2 lần liên tiếp
+            delete userUpdatePass.newPass;
+            return false;
+        }
+        userUpdatePass.newPass = newPass;
+    });
+
+     // nhập lại mật khấu mới
+     $("#input-change-comfirm-pass").bind("change", function () {
+        let comfirmPass = $(this).val();
+        // kiểm tra đã nhập mật khẩu mới chưa
+        if(!userUpdatePass.newPass) {
+            alertify.notify("Bạn chưa nhập mật khẩu mới", "error", 5);
+            $(this).val(null);
+            // xóa đi tránh lỗi khi nhập 2 lần liên tiếp
+            delete userUpdatePass.comfirmPass;
+            return false;
+        }
+        // xác nhận pass
+        if(comfirmPass !== userUpdatePass.newPass) {
+            alertify.notify("Nhập mật khẩu mới chưa chính xác", "error", 5);
+            $(this).val(null);
+            // xóa đi tránh lỗi khi nhập 2 lần liên tiếp
+            delete userUpdatePass.comfirmPass;
+            return false;
+        }
+        userUpdatePass.comfirmPass = comfirmPass;
+    });
+
+};
+
+function callLogout() {
+    let timeInterval;
+    Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Tự động đăng xuất sau 3 giây",
+        html: "<strong></strong>",
+        timer: 3000,
+        onBeforeOpen: () => {
+            Swal.showLoading();
+            timeInterval = setInterval(() => {
+                Swal.getContent().querySelector("strong").textContent = Math.ceil(Swal.getTimerLeft() / 1000);
+            }, 1000);
+        },
+        onClose: () => {
+            clearInterval(timeInterval);
+        },
+      }).then((result) => {
+          $.get("/logout", function () {
+              location.reload();
+          });
+      });
+};
+
+// ajax /profile/update-avatar
 function callUpdateAvatar() {
     $.ajax({
         url: "/profile/update-avatar",
@@ -155,8 +232,9 @@ function callUpdateAvatar() {
             $("#input-btn-reset-user").click();
          },
     });
-}
+};
 
+// ajax /profile/update-info
 function callUpdateUserInfo() {
     $.ajax({
         url: "/profile/update-info",
@@ -185,7 +263,36 @@ function callUpdateUserInfo() {
             $("#input-btn-reset-user").click();
          },
     });
-}
+};
+
+// ajax /profile/update-pass
+function callUpdateUserPass() {
+    $.ajax({
+        url: "/profile/update-pass",
+        type: "put",
+        data: userUpdatePass,
+        success: function (result) { 
+            // console.log(result);
+            // thông báo thành công
+            $(".user-modal-password-alert-success").find("span").text(result.message);
+            $(".user-modal-password-alert-success").css("display", "block");
+
+            // reset
+            $("#input-btn-cancel-pass").click();
+
+            // đăng xuất sau khi thay đổi mật khẩu thành công
+            callLogout();
+         },
+        error: function (error) { 
+            // hiển thị lỗi
+            $(".user-modal-password-alert-error").find("span").text(error.responseText);
+            $(".user-modal-password-alert-error").css("display", "block");
+
+            // reset
+            $("#input-btn-cancel-pass").click();
+         },
+    });
+};
 
 $(document).ready(function () {
    
@@ -200,7 +307,7 @@ $(document).ready(function () {
     // Cập nhập thông tin user
     updateProfle();
 
-    // click btn lưu
+    // click btn lưu user info
     $("#input-btn-update-user").bind("click", function () {
         if ($.isEmptyObject(userInfo) && !userAvatar){
             alertify.notify("Bạn chưa thay đổi thông tin", "error", 5);
@@ -218,7 +325,7 @@ $(document).ready(function () {
         }
     });
 
-    // click hủy bỏ
+    // click hủy bỏ user info
     $("#input-btn-reset-user").bind("click", function () {
         userAvatar = null;
         userInfo = {};
@@ -230,4 +337,39 @@ $(document).ready(function () {
         $("#input-change-address").val(originUserInfo.address);
         $("#input-change-phone").val(originUserInfo.phone);
     });
+
+    // click lưu mật khẩu
+    $("#input-btn-update-pass").bind("click", function () {
+        if (!userUpdatePass.currentPass || !userUpdatePass.newPass || !userUpdatePass.comfirmPass) {
+            alertify.notify("Bạn chưa nhập đủ thông tin", "error", 5);
+            return false;
+        }
+
+        Swal.fire({
+            title: "Bạn chắc chắn muốn thay đổi mật khẩu?",
+            text: "Mật khẩu của bạn sẽ bị thay đổi!!",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#2ECC71",
+            cancelButtonColor: "#FF7675",
+            confirmButtonText: "Xác nhận",
+            cancelButtonText: "Hủy",
+          }).then((result) => {
+            if(!result.value){
+                $("#input-btn-cancel-pass").click();
+                return false;
+            }
+            callUpdateUserPass();
+        });
+    });
+
+    // click hủy nhập mật khẩu
+    $("#input-btn-cancel-pass").bind("click", function () {
+        userUpdatePass = {};
+        $("#input-change-current-pass").val(null);
+        $("#input-change-new-pass").val(null);
+        $("#input-change-comfirm-pass").val(null);
+    });
+    
+
 });

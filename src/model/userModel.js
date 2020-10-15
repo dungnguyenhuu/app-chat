@@ -7,7 +7,7 @@ let Schema = mongoose.Schema;
 let UserSchema = new Schema({
     username: String,                                       // tên người dùng, tên đăng nhập
     gender: {type: String, default: "male"},                // giới tính, mặc định là male
-    phone: {type: Number, default: null},                   // số điện thoại, mặc định là null
+    phone: {type: String, default: null},                   // số điện thoại, mặc định là null
     address: {type: String, default: null},                 // địa chỉ, mặc đinh là null
     avatar: {type: String, default: "avatar-default.jpg"},  // link ảnh đại diện, có ảnh đại diện mặc định
     role: {type: String, default: "user"},                  // quyền của tại khoản, mặc định là user

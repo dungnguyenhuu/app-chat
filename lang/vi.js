@@ -3,6 +3,10 @@ export const transValidation = {
     gender_incorrect: "Bạn đã sửa trường giới tính của bạn?",
     password_incorrect: "Mật khẩu cần chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữa thường, chữ số và ký tự. VD: Aa@12345",
     password_comfirmation_incorrect: "Nhập lại mật khẩu chưa chính xác!!",
+    upadate_username: "Username giới hạn trong khoảng 3 - 17 kí tự ",
+    upadate_gender: "Bạn đã sửa trường giới tính của bạn?",
+    upadate_address: "Địa chỉ giới hạn trong khoảng 3 - 30 kí tự",
+    upadate_phone: "Số điện thoại Việt Nam bắt đầu bằng số 0, giới hạn trong khoảng 10-11 kí tự",
 };
 
 export const transErrors = {
@@ -22,6 +26,6 @@ export const transSuccess = {
     login_success: (username) => {
         return `${username} đăng nhập thành công.`
     },
-    logout_success: "Đăng xuất thành công.",
-    avatar_updated: "Cập nhập thông tin thành công",
+    logout_success: "Đăng xuất thành công",
+    user_info_updated: "Cập nhập thông tin người dùng thành công",
 };

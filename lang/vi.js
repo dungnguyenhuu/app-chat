@@ -13,10 +13,12 @@ export const transErrors = {
     account_in_use: "Email này đã được sử dụng.",
     account_remove: "Tài khoản đã bị xóa",
     account_not_active: "Email đã được đăng ký nhưng chưa được kích hoạt. Kiểm tra lại email",
+    account_undefine: "Tài khoản không tồn tại",
     login_failed: "Sai tài khoản hoặc mật khẩu.",
     server_error: "Có lỗi ở phía máy chủ",
     avatar_type: "Kiểu file không hợp lệ, chỉ chấp nhận jpg, png.",
     avatar_size: "Ảnh upload tối đa 1MB",
+    user_current_pass_failed: "Mật khẩu hiện tại không chính xác",
 };
 
 export const transSuccess = {
@@ -28,4 +30,5 @@ export const transSuccess = {
     },
     logout_success: "Đăng xuất thành công",
     user_info_updated: "Cập nhập thông tin người dùng thành công",
+    user_pass_updated: "Cập nhâp mật khẩu thành công",
 };

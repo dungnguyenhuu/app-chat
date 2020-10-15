@@ -63,6 +63,7 @@ let updateAvatar = (req, res) => {
     });
 };
 
+// cập nhập thông tin user
 let updateInfo = async (req, res) => {
     let errorArr = [];
     
@@ -91,9 +92,45 @@ let updateInfo = async (req, res) => {
         console.log(error);
         return res.status(500).send(error);
     }
-}
+};
+
+// Cập nhập password
+let updatePass = async (req, res) => {
+    let errorArr = [];
+
+    // kiểm tra dữ liệu nhập có lỗi
+    let validationErrors = validationResult(req);
+    if(!validationErrors.isEmpty()){
+        let errors = Object.values(validationErrors.mapped());
+
+        // lấy thông báo lỗi đưa vào mảng errorArr
+        errors.forEach(item => {
+            errorArr.push(item.msg);
+        });
+        return res.status(500).send(errorArr);
+    }
+
+    try {
+        let updateUserItem = req.body;
+        // req.body = {
+        //     currentPass: 'Aa@12345',
+        //     newPass: 'Aa@12345',
+        //     comfirmPass: 'Aa@12345'
+        //   }
+        // cập nhập password bên service
+        await user.updatePass(req.user.id, updateUserItem);
+
+        let result = {
+            message: transSuccess.user_pass_updated,
+        };
+        return res.status(200).send(result);
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+};
 
 module.exports = {
     updateAvatar: updateAvatar,
     updateInfo: updateInfo,
+    updatePass: updatePass,
 }

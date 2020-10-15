@@ -28,6 +28,8 @@ let initRoutes = (app) => {
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
     router.put("/profile/update-avatar", auth.checkLoggedIn, user.updateAvatar);
     router.put("/profile/update-info", auth.checkLoggedIn, userValid.updateInfo, user.updateInfo);
+    router.put("/profile/update-pass", auth.checkLoggedIn, userValid.updatePass, user.updatePass);
+
 
     return app.use("/", router);
 };

@@ -47,7 +47,7 @@ let postRegister = async (req, res) => {
 // đăng xuất
 let getLogout = (req, res) => {
     req.logout(); // xóa session passport 
-    req.flash("success", transSuccess.logout_success);
+    // req.flash("success", transSuccess.logout_success);
     return res.redirect("/login-register");
 };
 

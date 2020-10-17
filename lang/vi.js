@@ -7,6 +7,7 @@ export const transValidation = {
     upadate_gender: "Bạn đã sửa trường giới tính của bạn?",
     upadate_address: "Địa chỉ giới hạn trong khoảng 3 - 30 kí tự",
     upadate_phone: "Số điện thoại Việt Nam bắt đầu bằng số 0, giới hạn trong khoảng 10-11 kí tự",
+    keyword_find_user: "Lỗi từ khóa tìm kiếm, không được có kí tự đặc biệt",
 };
 
 export const transErrors = {

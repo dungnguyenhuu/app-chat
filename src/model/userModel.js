@@ -61,6 +61,22 @@ UserSchema.statics = {
     updatePass (id, newPass){
         return this.findByIdAndUpdate(id, {"local.password": newPass}).exec();
     },
+
+    // tìm user theo 1 mang va keyword
+    findAllForAddContact(deprecatedUserIds, keyword){
+        return this.find({
+            $and: [ // điều kiện and
+                {"_id": {$nin: deprecatedUserIds}}, // tìm id ko có trong mảng
+                {"local.isActive": true}, // tài khoản đã active
+                {$or: [ 
+                    {"username": {"$regex": keyword}}, // tên gần đúng
+                    {"local.email": {"$regex": keyword}},
+                    {"facebook.email": {"$regex": keyword}},
+                    {"google.email": {"$regex": keyword}},
+                ]},
+            ]
+        }, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
+    },
 };
 
 UserSchema.methods = {

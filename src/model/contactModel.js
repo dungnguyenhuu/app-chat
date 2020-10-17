@@ -17,6 +17,16 @@ ContactSchema.statics = {
     // tạo bản ghi mới
     createNew(item) {
         return this.create(item);
+    },
+
+    // tìm kiếm bạn bè đã kết bạn
+    findAllByUser(userId) {
+        return this.find({
+            $or: [
+                {"userId": userId},
+                {"contactId": userId}
+            ]
+        }).exec();
     }
 };
 

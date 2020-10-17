@@ -124,7 +124,7 @@ function updateProfle () {
             delete userInfo.address;
             return false;
         }
-        userInfo.phone = $(this).val();
+        userInfo.address = $(this).val();
     });
 
     // nhập mật khấu cũ

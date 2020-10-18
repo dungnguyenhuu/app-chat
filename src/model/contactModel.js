@@ -27,7 +27,33 @@ ContactSchema.statics = {
                 {"contactId": userId}
             ]
         }).exec();
-    }
+    },
+
+    // kiểm tra 2 người có phải là bạn của nhau
+    checkExists (userId, contactId) {
+        return this.findOne({
+            $or: [
+                {$and: [
+                    {"userId": userId},
+                    {"contactId": contactId},
+                ]},
+                {$and: [
+                    {"contactId": contactId},
+                    {"userId": userId},
+                ]}
+            ]
+        }).exec();
+    },
+
+    // xóa liên lạc giữa 2 người 
+    removeRequestContact (userId, contactId) {
+        return this.remove({
+            $and: [
+                {"userId": userId},
+                {"contactId": contactId},
+            ]
+        }).exec();
+    },
 };
 
 module.exports = mongoose.model("contact", ContactSchema);

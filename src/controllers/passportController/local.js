@@ -2,7 +2,6 @@ import passport from "passport";
 import passportLocal from "passport-local";
 import UserModel from "./../../model/userModel";
 import {transErrors, transSuccess} from "./../../../lang/vi";
-import { check } from "express-validator/check";
 
 let LocalStrategy = passportLocal.Strategy;
 

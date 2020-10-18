@@ -28,6 +28,7 @@ let avatartUploadFile = multer({
     limits: {fileSize: appConfig.avatar_limit_size},
 }).single("avatar");
 
+// cập nhập ảnh đại diện
 let updateAvatar = (req, res) => {
     avatartUploadFile(req, res, async (error) => {
         if(error) {

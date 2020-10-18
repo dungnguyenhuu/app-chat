@@ -69,10 +69,10 @@ UserSchema.statics = {
                 {"_id": {$nin: deprecatedUserIds}}, // tìm id ko có trong mảng
                 {"local.isActive": true}, // tài khoản đã active
                 {$or: [ 
-                    {"username": {"$regex": keyword}}, // tên gần đúng
-                    {"local.email": {"$regex": keyword}},
-                    {"facebook.email": {"$regex": keyword}},
-                    {"google.email": {"$regex": keyword}},
+                    {"username": {"$regex": new RegExp(keyword, "i") }}, // tên gần đúng, không phân biệt chữ hoa, chữ thường
+                    {"local.email": {"$regex": new RegExp(keyword, "i") }},
+                    {"facebook.email": {"$regex": new RegExp(keyword, "i") }},
+                    {"google.email": {"$regex": new RegExp(keyword, "i") }},
                 ]},
             ]
         }, {_id: 1, username: 1, address: 1, avatar: 1}).exec();

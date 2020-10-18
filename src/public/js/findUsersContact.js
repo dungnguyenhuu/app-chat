@@ -1,3 +1,6 @@
+/* ContactModal.ejs */
+
+// hàm nhận keyword và tìm kiếm user
 function callFindUsers(element) {
     if(element.which === 13 || element.type === "click"){ // 13 là sự kiện ấn phím enter
         let keyword = $("#input-find-user-contact").val();
@@ -16,12 +19,16 @@ function callFindUsers(element) {
         // đưa kết quả tìm kiếm ra giao diện
         $.get(`/contact/find-users/${keyword}`, function (data){
             $("#find-user ul").html(data);
+            addContact(); // js/addContact.js
+            removeRequestContact(); // js/removeRequestContact.js
         });
     }
 }
 
 $(document).ready(function () {
+    // gõ và ấn enter
     $("#input-find-user-contact").bind("keypress", callFindUsers);
 
+    // click icon tìm kiếm
     $("#btn-find-user-contact").bind("click", callFindUsers);
 });

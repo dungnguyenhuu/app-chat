@@ -26,11 +26,14 @@ let initRoutes = (app) => {
 
     router.get("/", auth.checkLoggedIn, home.getHome);
     router.get("/logout", auth.checkLoggedIn, auth.getLogout);
+
     router.put("/profile/update-avatar", auth.checkLoggedIn, user.updateAvatar);
     router.put("/profile/update-info", auth.checkLoggedIn, userValid.updateInfo, user.updateInfo);
     router.put("/profile/update-pass", auth.checkLoggedIn, userValid.updatePass, user.updatePass);
-    router.get("/contact/find-users/:keyword", auth.checkLoggedIn,contactValid.findUserContact,  contact.findUsersContact);
 
+    router.get("/contact/find-users/:keyword", auth.checkLoggedIn,contactValid.findUserContact,  contact.findUsersContact);
+    router.post("/contact/add-new", auth.checkLoggedIn, contact.addNew);
+    router.delete("/contact/remove-request-contact", auth.checkLoggedIn, contact.removeRequestContact);
 
     return app.use("/", router);
 };

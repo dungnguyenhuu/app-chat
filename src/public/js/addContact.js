@@ -15,3 +15,17 @@ function addContact() {
         });
     });
 };
+
+// nhận phản hồi khi có 1 yêu cầu kết bạn
+socket.on("response-add-new-contact", function(user) {
+    let notif = `<span data-uid="${ user.id }">
+                    <img class="avatar-small" src="images/users/${ user.avatar }" alt=""> 
+                    <strong>${ user.username }</strong> đã chấp nhận lời mời kết bạn của bạn!
+                </span><br><br><br>`;
+    // chèn thông báo mới nhất lên đầu
+    $(".noti_content").prepend(notif);
+
+    increaseNumberNotifContact("count-request-contact-received");
+    increaseNumberNotification("noti_contact_counter");
+    increaseNumberNotification("noti_counter");
+});

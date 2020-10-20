@@ -278,7 +278,7 @@ label:focus,
 }
 
 .noti_contact_counter {
-  display: block;
+  display: none;
   position: absolute;
   background: #E1141E;
   color: #FFF;
@@ -308,12 +308,13 @@ label:focus,
 }
 
 .noti_content {
+  position: relative;
   height: 200px;
   background-color: #fff;
   overflow: auto;
 }
 
-.noti_content>span {
+.noti_content > span {
   position: absolute;
   max-width: 95%;
   margin-top: 5px;

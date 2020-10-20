@@ -11,8 +11,20 @@ function removeRequestContact() {
                     $("#find-user").find(`div.user-remove-request-contact[data-uid = ${targetId}]`).hide();
                     $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).css("display", "inline-block");
                     decreaseNumberNotifContact("count-request-contact-sent"); // js/caculateNotuf.js
+
+                    socket.emit("remove-req-contact", {contactId: targetId});
                 }
             }
         });
     });
 };
+
+// nhận phản hồi khi có 1 hủy bỏ kết bạn
+socket.on("response-remove-req-contact", function(user) {
+    // xóa trên thông báo của người bạn kia
+    $(".noti_content").find(`span[data-uid = ${user.id}]`).remove();
+    // xóa ở modal contact
+    decreaseNumberNotifContact("count-request-contact-received");
+    decreaseNumberNotification("noti_contact_counter");
+    decreaseNumberNotification("noti_counter");
+});

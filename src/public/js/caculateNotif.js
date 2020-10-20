@@ -1,4 +1,4 @@
-// giảm số thông báo
+// giảm số thông báo trên contact moadal
 function decreaseNumberNotifContact(className) {
     let currentValue = +$(`.${className}`).find("em").text();
     currentValue -= 1;
@@ -9,7 +9,7 @@ function decreaseNumberNotifContact(className) {
     }
 };
 
-// tăng số thông báo
+// tăng số thông báo trên contact moadal
 function increaseNumberNotifContact(className) {
     let currentValue = +$(`.${className}`).find("em").text();
     currentValue += 1;

@@ -27,7 +27,7 @@ let addNewContact = (io) => {
         socket.on("disconnect", () => {
             clients = removeSocketIdToArray(clients, socket.request.user._id, socket);
         });
-        console.log(clients);
+        // console.log(clients);
     });
 };
 

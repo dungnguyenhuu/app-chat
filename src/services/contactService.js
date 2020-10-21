@@ -1,5 +1,6 @@
 import ContactModel from "./../model/contactModel";
 import UserModel from "./../model/userModel";
+import NotificationModel from "./../model/notificationModel";
 import _ from "lodash";
 
 // tìm kiếm người dùng để kết bạn
@@ -41,6 +42,15 @@ let addNew = (currentUserId, contactId) => {
         // tạo 1 liên lạc giữa 2 user
         // gọi createNew() ở ContactModel
         let newContact = await ContactModel.createNew(newContactItem);
+
+        // tạo thông báo khi gửi lời mời kết bạn
+        let notificationItem = {
+            senderId: currentUserId, 
+            receiverId: contactId, 
+            type: NotificationModel.types.ADD_CONTACT, 
+        };
+        await NotificationModel.model.createNew(notificationItem);
+
         resolve(newContact);
     });
 };
@@ -53,6 +63,10 @@ let removeRequestContact = (currentUserId, contactId) => {
         if(removeReq.result === 0) {
             return reject(false);
         };
+
+        // xóa thông báo
+        await NotificationModel.model.removeReqContactNotification(currentUserId, contactId, NotificationModel.types.ADD_CONTACT);
+
         resolve(true);
     });
 };

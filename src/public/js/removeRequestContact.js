@@ -21,8 +21,12 @@ function removeRequestContact() {
 
 // nhận phản hồi khi có 1 hủy bỏ kết bạn
 socket.on("response-remove-req-contact", function(user) {
-    // xóa trên thông báo của người bạn kia
-    $(".noti_content").find(`span[data-uid = ${user.id}]`).remove();
+    // xóa trên thông báo trên popup notifications
+    $(".noti_content").find(`div[data-uid = ${user.id}]`).remove();
+    // xóa trên thông báo trên modal notifications
+    $(".list-notifications").find(`li>div[data-uid = ${user.id}]`).parent().remove();
+
+
     // xóa ở modal contact
     decreaseNumberNotifContact("count-request-contact-received");
     decreaseNumberNotification("noti_contact_counter");

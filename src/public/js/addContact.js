@@ -18,12 +18,15 @@ function addContact() {
 
 // nhận phản hồi khi có 1 yêu cầu kết bạn
 socket.on("response-add-new-contact", function(user) {
-    let notif = `<span class="notif-readed-false" data-uid="${ user.id }">
+    let notif = `<div class="notif-readed-false" data-uid="${ user.id }">
                     <img class="avatar-small" src="images/users/${ user.avatar }" alt=""> 
                     <strong>${ user.username }</strong> đã chấp nhận lời mời kết bạn của bạn!
-                </span><br><br><br>`;
-    // chèn thông báo mới nhất lên đầu
+                </div>`;
+    // chèn thông báo mới nhất lên đầu popup notification
     $(".noti_content").prepend(notif);
+
+    // chèn thông báo mới nhất lên đầu modal notification
+    $(".list-notifications").prepend(`<li>${notif}</li>`)
 
     increaseNumberNotifContact("count-request-contact-received");
     increaseNumberNotification("noti_contact_counter");

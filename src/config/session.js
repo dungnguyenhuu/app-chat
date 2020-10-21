@@ -22,7 +22,7 @@ let config = (app) => {
         resave: true,
         saveUninitialized: false,
         cookie: {
-            maxAge: 1000*60*30 // 15min
+            maxAge: 1000*60*60*2 // 2h
         }
     }));
 };

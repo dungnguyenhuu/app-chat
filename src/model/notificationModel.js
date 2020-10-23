@@ -45,7 +45,18 @@ NotificationSchema.statics = {
     // lấy thêm thông báo
     readMore(userId, skip, limit) {
         return this.find({"receiverId": userId}).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
-    }
+    },
+
+    // đánh dấu đã đọc tất cả các thông báo
+    markAllAsRead(userId, targetUsers) {
+        return this.updateMany(
+            {$and: [
+                {"receiverId": userId},
+                {"senderId": {$in: targetUsers}},
+            ]},
+            {"isRead": true}
+        ).exec();
+    },
 };
 
 const NOTIFICATION_TYPES = {

@@ -1,6 +1,6 @@
 import UserModel from "./../model/userModel";
 import NotificationModel from "./../model/notificationModel";
-const LIMIT_NUMBER_TAKEN = 10;
+const LIMIT_NUMBER_TAKEN = 1;
 
 /* lấy 10 thông báo từ database */
 let getNotifications = (currentUserId) => {
@@ -51,8 +51,22 @@ let readMore = (currentUserId, skipNumberNotif) => {
     });
 };
 
+/* đánh dấu đã đọc tất cả thông báo */
+let markAllAsRead = (currentUserId, targetUsers) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await NotificationModel.model.markAllAsRead(currentUserId, targetUsers);
+            resolve(true);
+        } catch (error) {
+            console.log(`Error when mark notification as read: ${error}`);
+            reject(false);
+        }
+    });
+};
+
 module.exports = {
     getNotifications: getNotifications,
     countNotifUnread: countNotifUnread,
     readMore: readMore,
+    markAllAsRead: markAllAsRead,
 };

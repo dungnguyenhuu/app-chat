@@ -54,6 +54,73 @@ ContactSchema.statics = {
             ]
         }).exec();
     },
+
+    // lấy users trong danh bạ
+    getContacts(userId, limit){
+        return this.find({
+            $and: [
+                {$or: [
+                    {"userId": userId},
+                    {"contactId": userId}
+                ]},
+                {"status": true},
+            ]
+        }).sort({"createdAt": -1}).limit(limit).exec();
+    },
+
+    // lấy tổng số user
+    countAllContacts(userId) {
+        return this.count({
+            $and: [
+                {$or: [
+                    {"userId": userId},
+                    {"contactId": userId}
+                ]},
+                {"status": true},
+            ]
+        }).exec();
+    },
+
+    // lấy users đã gửi lời mời (sent)
+    getContactsSend(userId, limit){
+        return this.find({
+            $and: [
+                {"userId": userId},
+                {"status": false},
+            ]
+        }).sort({"createdAt": -1}).limit(limit).exec();
+    },
+
+    // lấy tổng số user
+    countAllContactsSend(userId) {
+        return this.count({
+            $and: [
+                {"userId": userId},
+                {"status": false},
+            ]
+        }).exec();    
+    },
+
+    // lấy các lời mời đã nhận recevied
+    getContactsRecevied(userId, limit){
+        return this.find({
+            $and: [
+                {"contactId": userId},
+                {"status": false},
+            ]
+        }).sort({"createdAt": -1}).limit(limit).exec();
+    },
+
+    // lấy tổng số user
+    countAllContactsRecevied(userId) {
+        return this.count({
+            $and: [
+                {"contactId": userId},
+                {"status": false},
+            ]
+        }).exec();    
+    },
+
 };
 
 module.exports = mongoose.model("contact", ContactSchema);

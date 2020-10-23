@@ -12,6 +12,9 @@ function removeRequestContact() {
                     $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).css("display", "inline-block");
                     decreaseNumberNotifContact("count-request-contact-sent"); // js/caculateNotuf.js
 
+                    // xóa ở tab đang chờ xác nhận
+                    $("#request-contact-sent").find(`li[data-uid=${targetId}]`).remove();
+
                     socket.emit("remove-req-contact", {contactId: targetId});
                 }
             }
@@ -26,6 +29,8 @@ socket.on("response-remove-req-contact", function(user) {
     // xóa trên thông báo trên modal notifications
     $(".list-notifications").find(`li>div[data-uid = ${user.id}]`).parent().remove();
 
+    // xóa ở tab yêu cầu kết bạn
+    $("#request-contact-received").find(`li[data-uid=${user.id}]`).remove();
 
     // xóa ở modal contact
     decreaseNumberNotifContact("count-request-contact-received");

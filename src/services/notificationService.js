@@ -1,6 +1,6 @@
 import UserModel from "./../model/userModel";
 import NotificationModel from "./../model/notificationModel";
-const LIMIT_NUMBER_TAKEN = 1;
+const LIMIT_NUMBER_TAKEN = 8;
 
 /* lấy 10 thông báo từ database */
 let getNotifications = (currentUserId) => {

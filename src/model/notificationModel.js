@@ -1,11 +1,9 @@
-import { is } from "bluebird";
 import mongoose from "mongoose";
 
 let Schema = mongoose.Schema;
 
 // lưu các thông tin về 1 thông báo
 let NotificationSchema = new Schema({
-    
     senderId: String,                                       // người gửi thông báo    
     receiverId: String,                                     //người nhận thông báo
     type: String,                                  // thể loại thông báo 
@@ -42,6 +40,11 @@ NotificationSchema.statics = {
                 {"isRead": false},
             ]
         }).exec();
+    },
+
+    // lấy thêm thông báo
+    readMore(userId, skip, limit) {
+        return this.find({"receiverId": userId}).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
     }
 };
 
@@ -55,13 +58,13 @@ const NOTIFICATION_CONTENTS = {
             if(!isRead) {
                 return `<div class="notif-readed-false" data-uid="${ userId }">
                             <img class="avatar-small" src="images/users/${ userAvatar }" alt=""> 
-                            <strong>${ username }</strong> đã chấp nhận lời mời kết bạn của bạn!
+                            <strong>${ username }</strong> đã gửi lời mời kết bạn cho bạn!
                         </div>`;
             }
 
             return `<div data-uid="${ userId }">
                             <img class="avatar-small" src="images/users/${ userAvatar }" alt=""> 
-                            <strong>${ username }</strong> đã chấp nhận lời mời kết bạn của bạn!
+                            <strong>${ username }</strong> đã gửi lời mời kết bạn cho bạn!
                         </div>`;
         };
         return "No matching witj any notification type";

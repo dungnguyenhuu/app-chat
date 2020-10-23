@@ -29,6 +29,6 @@ socket.on("response-remove-req-contact", function(user) {
 
     // xóa ở modal contact
     decreaseNumberNotifContact("count-request-contact-received");
-    decreaseNumberNotification("noti_contact_counter");
-    decreaseNumberNotification("noti_counter");
+    decreaseNumberNotification("noti_contact_counter", 1);
+    decreaseNumberNotification("noti_counter", 1);
 });

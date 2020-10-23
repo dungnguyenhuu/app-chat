@@ -20,13 +20,13 @@ function addContact() {
 socket.on("response-add-new-contact", function(user) {
     let notif = `<div class="notif-readed-false" data-uid="${ user.id }">
                     <img class="avatar-small" src="images/users/${ user.avatar }" alt=""> 
-                    <strong>${ user.username }</strong> đã chấp nhận lời mời kết bạn của bạn!
+                    <strong>${ user.username }</strong> đã gửi lời mời kết bạn cho bạn!
                 </div>`;
     // chèn thông báo mới nhất lên đầu popup notification
     $(".noti_content").prepend(notif);
 
     // chèn thông báo mới nhất lên đầu modal notification
-    $(".list-notifications").prepend(`<li>${notif}</li>`)
+    $("ul.list-notifications").prepend(`<li>${notif}</li>`);
 
     increaseNumberNotifContact("count-request-contact-received");
     increaseNumberNotification("noti_contact_counter");

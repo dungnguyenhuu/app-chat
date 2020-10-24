@@ -51,6 +51,7 @@ ContactSchema.statics = {
             $and: [
                 {"userId": userId},
                 {"contactId": contactId},
+                {"status": false},
             ]
         }).exec();
     },
@@ -61,8 +62,20 @@ ContactSchema.statics = {
             $and: [
                 {"contactId": userId},
                 {"userId": contactId},
+                {"status": false},
             ]
         }).exec();
+    },
+
+     // chấp nhận yêu cầu ở tab yêu cầu kết bạn 
+     approveRequestContactRecevied (userId, contactId) {
+        return this.update({
+            $and: [
+                {"contactId": userId},
+                {"userId": contactId},
+                {"status": false},
+            ]
+        }, {"status": true}).exec();
     },
 
     // lấy users trong danh bạ

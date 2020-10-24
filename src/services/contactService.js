@@ -51,13 +51,14 @@ let addNew = (currentUserId, contactId) => {
             receiverId: contactId, 
             type: NotificationModel.types.ADD_CONTACT, 
         };
+        // tạo thông báo
         await NotificationModel.model.createNew(notificationItem);
 
         resolve(newContact);
     });
 };
 
-// hủy yêu cầu kết bạn
+// hủy yêu cầu kết bạn bên tab đang chờ xác nhận
 let removeRequestContactSent = (currentUserId, contactId) => {
     return new Promise (async (resolve, reject) => {
         // gọi removeRequestContactSent() ở ContactModel
@@ -73,11 +74,12 @@ let removeRequestContactSent = (currentUserId, contactId) => {
     });
 };
 
+// hủy yêu cầu kết bạn bên tab yêu cầu kết bạn
 let removeRequestContactRecevied = (currentUserId, contactId) => {
     return new Promise (async (resolve, reject) => {
-        // gọi removeRequestContactSent() ở ContactModel
+        // gọi removeRequestContactRecevied() ở ContactModel
         let removeReq = await ContactModel.removeRequestContactRecevied(currentUserId, contactId);
-        if(removeReq.result === 0) {
+        if(removeReq.result.n === 0) {
             return reject(false);
         };
 
@@ -88,6 +90,28 @@ let removeRequestContactRecevied = (currentUserId, contactId) => {
     });
 };
 
+// chấp nhận yêu cầu kết bạn bên tab yêu cầu kết bạn
+let approveRequestContactRecevied = (currentUserId, contactId) => {
+    return new Promise (async (resolve, reject) => {
+        // gọi approveRequestContactRecevied() ở ContactModel
+        let approveReq = await ContactModel.approveRequestContactRecevied(currentUserId, contactId);
+        // console.log(approveReq);
+        if(approveReq.nModified === 0) {
+            return reject(false);
+        };
+
+        // tạo thông báo khi chấp nhận lời mời kết bạn
+        let notificationItem = {
+            senderId: currentUserId, 
+            receiverId: contactId, 
+            type: NotificationModel.types.APPROVE_CONTACT, 
+        };
+        // tạo thông báo
+        await NotificationModel.model.createNew(notificationItem);
+
+        resolve(true);
+    });
+}
 // lấy user bên tab danh bạ
 let getContacts = (currentUserId) => {
     return new Promise (async (resolve, reject) => {
@@ -236,6 +260,7 @@ module.exports = {
     addNew: addNew,
     removeRequestContactSent: removeRequestContactSent,
     removeRequestContactRecevied: removeRequestContactRecevied,
+    approveRequestContactRecevied: approveRequestContactRecevied,
     getContacts: getContacts,
     getContactsSend: getContactsSend,
     getContactsRecevied: getContactsRecevied,

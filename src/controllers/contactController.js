@@ -57,8 +57,61 @@ let removeRequestContact = async (req, res) => {
     }
 }; 
 
+// lấy thêm user trong contact bên tab danh bạ
+let readMoreContacts = async (req, res) => {
+    try {
+        // số user đã lấy
+        let skipNumberContact = +(req.query.skipNumber);
+
+        // lấy thêm user
+        let newContactUsers = await contact.readMoreContacts(req.user._id, skipNumberContact);
+        return res.status(200).send(newContactUsers);
+    } catch (error) {
+        console.log("loi o contactController");
+        console.log(error);
+        return res.status(500).send(error);
+    }
+};
+
+// lấy thêm user trong contact bên tab đang chờ xác nhận
+let readMoreContactsSent = async (req, res) => {
+    try {
+        // số user đã lấy
+        let skipNumberContactSent = +(req.query.skipNumber);
+        // console.log(skipNumberContactSent);
+        // lấy thêm user
+        let newContactSent = await contact.readMoreContactsSent(req.user._id, skipNumberContactSent);
+        // console.log(newContactSent);
+        return res.status(200).send(newContactSent);
+    } catch (error) {
+        console.log("loi o readMoreContactsSent contactController");
+        console.log(error);
+        return res.status(500).send(error);
+    }
+};
+
+// lấy thêm user trong contact bên tab yêu cầu kết bạn
+let readMoreContactsReceived = async (req, res) => {
+    try {
+        // số user đã lấy
+        let skipNumberContactReceived = +(req.query.skipNumber);
+        // console.log(skipNumberContactReceived);
+        // lấy thêm user
+        let newContactReceived = await contact.readMoreContactsReceived(req.user._id, skipNumberContactReceived);
+        // console.log(newContactReceived);
+        return res.status(200).send(newContactReceived);
+    } catch (error) {
+        console.log("loi o readMoreContactsReceived contactController");
+        console.log(error);
+        return res.status(500).send(error);
+    }
+};
+
 module.exports = {
     findUsersContact: findUsersContact,
     addNew: addNew,
     removeRequestContact: removeRequestContact,
+    readMoreContacts: readMoreContacts,
+    readMoreContactsSent: readMoreContactsSent,
+    readMoreContactsReceived: readMoreContactsReceived,
 };

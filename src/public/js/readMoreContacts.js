@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    /* tab danh ba */
+    /* tab danh bạ */
     $("#link-read-more-contacts").bind("click", function (e) {
         let skipNumber = $("#contacts").find("li").length;
 
@@ -37,6 +37,9 @@ $(document).ready(function () {
                             </li>`
                         );
             });
+
+            removeContact(); // js/removeContact.js
+
         });
     });
 

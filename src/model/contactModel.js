@@ -46,7 +46,7 @@ ContactSchema.statics = {
     },
 
     // xóa liên lạc giữa 2 người 
-    removeRequestContact (userId, contactId) {
+    removeRequestContactSent (userId, contactId) {
         return this.remove({
             $and: [
                 {"userId": userId},

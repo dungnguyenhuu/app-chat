@@ -41,7 +41,7 @@ $(document).ready(function () {
     });
 
     /* tab đang chờ xác nhận */
-    $("#link-read-more-contactsSend").bind("click", function (e) {
+    $("#link-read-more-contacts-send").bind("click", function (e) {
         let skipNumber = $("#request-contact-sent").find("li").length;
 
         $.get(`/contact/read-more-contacts-sent?skipNumber=${skipNumber}`, function(newContactSent) {
@@ -69,18 +69,20 @@ $(document).ready(function () {
                                 <div class="user-address">
                                     <span>&nbsp ${ (user.address !== null) ? user.address : "" }</span>
                                 </div>
-                                <div class="user-remove-request-sent action-danger" data-uid="${ user._id }">
+                                <div class="user-remove-request-contact-sent action-danger display-important" data-uid="${ user._id }">
                                     Hủy yêu cầu
                                 </div>
                             </div>
                         </li>`
                         );
             });
+
+            removeRequestContactSent(); // js/removeRequestContactSent.js
         });
     });
 
     /* tab yêu cầu kết bạn */
-    $("#link-read-more-contactsRecevied").bind("click", function (e) {
+    $("#link-read-more-contacts-recevied").bind("click", function (e) {
         let skipNumber = $("#request-contact-received").find("li").length;
 
         $.get(`/contact/read-more-contacts-received?skipNumber=${skipNumber}`, function(newContactReceived) {

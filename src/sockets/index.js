@@ -1,9 +1,9 @@
 import addNewContact from "./contact/addNewContact";
-import removReqContact from "./contact/removeReqContact";
+import removReqContactSent from "./contact/removReqContactSent";
 
 let initSockets = (io) => {
     addNewContact(io);
-    removReqContact(io);
+    removReqContactSent(io);
 };
 
 module.exports = initSockets;

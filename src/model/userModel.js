@@ -50,6 +50,12 @@ UserSchema.statics = {
         return this.findById(id).exec();
     },
 
+    // tìm kiếm theo id, lấy ra một số thông tin
+    getNomalDataUserById(id){
+        // console.log(id);
+        return this.findById(id, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
+    },
+
     // cập nhập 
     updateUser(id, item) {
         // mongo khi update sẽ trả về dữ liệu cũ

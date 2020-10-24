@@ -2,9 +2,8 @@ import ContactModel from "./../model/contactModel";
 import UserModel from "./../model/userModel";
 import NotificationModel from "./../model/notificationModel";
 import _ from "lodash";
-import { resolveInclude } from "ejs";
 
-const LIMIT_NUMBER_TAKEN = 8;
+const LIMIT_NUMBER_TAKEN = 1;
 
 // tìm kiếm người dùng để kết bạn
 let findUsersContact = (currentUserId, keyword) => {
@@ -74,15 +73,16 @@ let removeRequestContact = (currentUserId, contactId) => {
     });
 };
 
+// lấy user bên tab danh bạ
 let getContacts = (currentUserId) => {
     return new Promise (async (resolve, reject) => {
         try {
             let contacts = await ContactModel.getContacts(currentUserId, LIMIT_NUMBER_TAKEN);
             let users = contacts.map(async (contact) => {
                 if(contact.contactId == currentUserId) {
-                    return await UserModel.findUserById(contact.userId);
+                    return await UserModel.getNomalDataUserById(contact.userId);
                 } else {
-                    return await UserModel.findUserById(contact.contactId);
+                    return await UserModel.getNomalDataUserById(contact.contactId);
                 }
             });
 
@@ -93,6 +93,7 @@ let getContacts = (currentUserId) => {
     });
 };
 
+// tổng user trong danh bạ
 let countAllContacts = (currentUserId) => {
     return new Promise (async (resolve, reject) => {
         try {
@@ -104,12 +105,18 @@ let countAllContacts = (currentUserId) => {
     });
 };
 
-let getContactsSend = (currentUserId) => {
-    return new Promise (async (resolve, reject) => {
+// lấy thêm user bên tab danh bạ
+let readMoreContacts = (currentUserId, skipNumberContact) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            let contacts = await ContactModel.getContactsSend(currentUserId, LIMIT_NUMBER_TAKEN);
-            let users = contacts.map(async (contact) => {
-                return await UserModel.findUserById(contact.contactId);
+            let newContacts = await ContactModel.readMoreContacts(currentUserId, skipNumberContact, LIMIT_NUMBER_TAKEN);
+            
+            let users = newContacts.map(async (contact) => {
+                if(contact.contactId == currentUserId) {
+                    return await UserModel.getNomalDataUserById(contact.userId);
+                } else {
+                    return await UserModel.getNomalDataUserById(contact.contactId);
+                }
             });
 
             resolve(await Promise.all(users));
@@ -119,6 +126,23 @@ let getContactsSend = (currentUserId) => {
     });
 };
 
+// lấy user bên tab đang chờ xác nhận
+let getContactsSend = (currentUserId) => {
+    return new Promise (async (resolve, reject) => {
+        try {
+            let contacts = await ContactModel.getContactsSend(currentUserId, LIMIT_NUMBER_TAKEN);
+            let users = contacts.map(async (contact) => {
+                return await UserModel.getNomalDataUserById(contact.contactId);
+            });
+
+            resolve(await Promise.all(users));
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+// tổng user trong đang chờ xác nhận
 let countAllContactsSend = (currentUserId) => {
     return new Promise (async (resolve, reject) => {
         try {
@@ -130,12 +154,14 @@ let countAllContactsSend = (currentUserId) => {
     });
 };
 
-let getContactsRecevied = (currentUserId) => {
-    return new Promise (async (resolve, reject) => {
+// lấy thêm user bên tab đang chờ xác nhận
+let readMoreContactsSent = (currentUserId, skipNumberContactSent) => {
+    return new Promise(async (resolve, reject) => {
         try {
-            let contacts = await ContactModel.getContactsRecevied(currentUserId, LIMIT_NUMBER_TAKEN);
-            let users = contacts.map(async (contact) => {
-                return await UserModel.findUserById(contact.userId);
+            let contactsSent = await ContactModel.readMoreContactsSent(currentUserId, skipNumberContactSent, LIMIT_NUMBER_TAKEN);
+            
+            let users = contactsSent.map(async (contactSent) => {
+                return await UserModel.getNomalDataUserById(contactSent.contactId);
             });
 
             resolve(await Promise.all(users));
@@ -145,11 +171,45 @@ let getContactsRecevied = (currentUserId) => {
     });
 };
 
+// lấy user bên tab yêu cầu kết bạn
+let getContactsRecevied = (currentUserId) => {
+    return new Promise (async (resolve, reject) => {
+        try {
+            let contacts = await ContactModel.getContactsRecevied(currentUserId, LIMIT_NUMBER_TAKEN);
+            let users = contacts.map(async (contact) => {
+                return await UserModel.getNomalDataUserById(contact.userId);
+            });
+
+            resolve(await Promise.all(users));
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+// tổng user trong yêu cầu kết bạn
 let countAllContactsRecevied = (currentUserId) => {
     return new Promise (async (resolve, reject) => {
         try {
             let count = await ContactModel.countAllContactsRecevied(currentUserId, LIMIT_NUMBER_TAKEN);
             resolve(count);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
+// lấy thêm user bên tab yêu cầu kết bạn
+let readMoreContactsReceived = (currentUserId, skipNumberContactReceived) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let contactsReceived = await ContactModel.readMoreContactsReceived(currentUserId, skipNumberContactReceived, LIMIT_NUMBER_TAKEN);
+            
+            let users = contactsReceived.map(async (contactReceived) => {
+                return await UserModel.getNomalDataUserById(contactReceived.userId);
+            });
+
+            resolve(await Promise.all(users));
         } catch (error) {
             reject(error);
         }
@@ -166,4 +226,7 @@ module.exports = {
     countAllContacts: countAllContacts,
     countAllContactsSend: countAllContactsSend,
     countAllContactsRecevied: countAllContactsRecevied,
+    readMoreContacts: readMoreContacts,
+    readMoreContactsSent: readMoreContactsSent,
+    readMoreContactsReceived: readMoreContactsReceived,
 };

@@ -9,7 +9,7 @@ let getNotifications = (currentUserId) => {
             let notifications = await NotificationModel.model.getByUserIdAndLimit(currentUserId, LIMIT_NUMBER_TAKEN);
 
             let getNotifContents = notifications.map(async (notification) => {
-                let sender = await UserModel.findUserById(notification.senderId);
+                let sender = await UserModel.getNomalDataUserById(notification.senderId);
                 return NotificationModel.contents.getContent(notification.type, notification.isRead, sender._id, sender.username, sender.avatar);
             });
 
@@ -40,7 +40,7 @@ let readMore = (currentUserId, skipNumberNotif) => {
             let newNotification = await NotificationModel.model.readMore(currentUserId, skipNumberNotif, LIMIT_NUMBER_TAKEN);
             
             let getNotifContents = newNotification.map(async (notification) => {
-                let sender = await UserModel.findUserById(notification.senderId);
+                let sender = await UserModel.getNomalDataUserById(notification.senderId);
                 return NotificationModel.contents.getContent(notification.type, notification.isRead, sender._id, sender.username, sender.avatar);
             });
 

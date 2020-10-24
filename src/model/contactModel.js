@@ -68,7 +68,7 @@ ContactSchema.statics = {
         }).sort({"createdAt": -1}).limit(limit).exec();
     },
 
-    // lấy tổng số user
+    // lấy tổng số user trong danh bạ
     countAllContacts(userId) {
         return this.count({
             $and: [
@@ -81,7 +81,20 @@ ContactSchema.statics = {
         }).exec();
     },
 
-    // lấy users đã gửi lời mời (sent)
+    // lấy thêm user bên tab danh bạ
+    readMoreContacts(userId, skip, limit){
+        return this.find({
+            $and: [
+                {$or: [
+                    {"userId": userId},
+                    {"contactId": userId}
+                ]},
+                {"status": true},
+            ]
+        }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+    },
+
+    // lấy user bên tab đang chờ xác nhận
     getContactsSend(userId, limit){
         return this.find({
             $and: [
@@ -91,7 +104,7 @@ ContactSchema.statics = {
         }).sort({"createdAt": -1}).limit(limit).exec();
     },
 
-    // lấy tổng số user
+    // lấy tổng số user bên tab đang chờ xác nhận
     countAllContactsSend(userId) {
         return this.count({
             $and: [
@@ -101,7 +114,17 @@ ContactSchema.statics = {
         }).exec();    
     },
 
-    // lấy các lời mời đã nhận recevied
+    // lấy thêm user bên tab đang chờ xác nhận
+    readMoreContactsSent(userId, skip, limit){
+        return this.find({
+            $and: [
+                {"userId": userId},
+                {"status": false},
+            ]
+        }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+    },
+
+    // lấy user bên tab yêu cầu kết bạn
     getContactsRecevied(userId, limit){
         return this.find({
             $and: [
@@ -111,7 +134,7 @@ ContactSchema.statics = {
         }).sort({"createdAt": -1}).limit(limit).exec();
     },
 
-    // lấy tổng số user
+    // tổng user trong yêu cầu kết bạn
     countAllContactsRecevied(userId) {
         return this.count({
             $and: [
@@ -119,6 +142,16 @@ ContactSchema.statics = {
                 {"status": false},
             ]
         }).exec();    
+    },
+
+    // lấy thêm user bên tab yêu cầu kết bạn
+    readMoreContactsReceived(userId, skip, limit){
+        return this.find({
+            $and: [
+                {"contactId": userId},
+                {"status": false},
+            ]
+        }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
     },
 
 };

@@ -15,7 +15,7 @@ function removeRequestContactRecevied() {
                     // $(".list-notifications").find(`li>div[data-uid = ${user.id}]`).parent().remove();
                     // decreaseNumberNotification("noti_counter", 1); // js/caculateNotification.js
 
-                    // giảm số thông báo ở yêu cầu kết bạn trong modal contact
+                    // giảm số thông báo ở tab yêu cầu kết bạn trong modal contact
                     decreaseNumberNotifContact("count-request-contact-received"); // js/caculateNotif.js
 
                     // giảm số thông báo navbar

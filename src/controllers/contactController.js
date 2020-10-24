@@ -71,6 +71,19 @@ let removeRequestContactRecevied = async (req, res) => {
     }
 };
 
+let approveRequestContactRecevied = async (req, res) => {
+    try {
+        let currentUserId = req.user._id;
+        let contactId = req.body.uid;
+
+        // gọi approveRequestContactSent() ở servive
+        let approveReq = await contact.approveRequestContactRecevied(currentUserId, contactId);
+        return res.status(200).send({success: !!approveReq});
+    } catch (error) {
+        return res.status(500).send(error);        
+    }
+};
+
 // lấy thêm user trong contact bên tab danh bạ
 let readMoreContacts = async (req, res) => {
     try {
@@ -126,6 +139,7 @@ module.exports = {
     addNew: addNew,
     removeRequestContactSent: removeRequestContactSent,
     removeRequestContactRecevied: removeRequestContactRecevied,
+    approveRequestContactRecevied: approveRequestContactRecevied,
     readMoreContacts: readMoreContacts,
     readMoreContactsSent: readMoreContactsSent,
     readMoreContactsReceived: readMoreContactsReceived,

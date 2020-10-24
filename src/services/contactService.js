@@ -58,10 +58,10 @@ let addNew = (currentUserId, contactId) => {
 };
 
 // hủy yêu cầu kết bạn
-let removeRequestContact = (currentUserId, contactId) => {
+let removeRequestContactSent = (currentUserId, contactId) => {
     return new Promise (async (resolve, reject) => {
-        // gọi removeRequestContact() ở ContactModel
-        let removeReq = await ContactModel.removeRequestContact(currentUserId, contactId);
+        // gọi removeRequestContactSent() ở ContactModel
+        let removeReq = await ContactModel.removeRequestContactSent(currentUserId, contactId);
         if(removeReq.result === 0) {
             return reject(false);
         };
@@ -219,7 +219,7 @@ let readMoreContactsReceived = (currentUserId, skipNumberContactReceived) => {
 module.exports = {
     findUsersContact: findUsersContact,
     addNew: addNew,
-    removeRequestContact: removeRequestContact,
+    removeRequestContactSent: removeRequestContactSent,
     getContacts: getContacts,
     getContactsSend: getContactsSend,
     getContactsRecevied: getContactsRecevied,

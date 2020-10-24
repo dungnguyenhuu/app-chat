@@ -183,7 +183,7 @@ function callLogout() {
     let timeInterval;
     Swal.fire({
         position: "top-end",
-        icon: "success",
+        type: "success",
         title: "Tự động đăng xuất sau 3 giây",
         html: "<strong></strong>",
         timer: 3000,
@@ -348,7 +348,7 @@ $(document).ready(function () {
         Swal.fire({
             title: "Bạn chắc chắn muốn thay đổi mật khẩu?",
             text: "Mật khẩu của bạn sẽ bị thay đổi!!",
-            icon: "info",
+            types: "info",
             showCancelButton: true,
             confirmButtonColor: "#2ECC71",
             cancelButtonColor: "#FF7675",

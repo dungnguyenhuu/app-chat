@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { user } from "../services";
 
 let Schema = mongoose.Schema;
 
@@ -38,8 +39,29 @@ ContactSchema.statics = {
                     {"contactId": contactId},
                 ]},
                 {$and: [
-                    {"contactId": contactId},
+                    {"userId": contactId},
+                    {"contactId": userId},
+                ]}
+            ]
+        }).exec();
+    },
+
+    // hủy bỏ liên lạc bên tab danh bạ
+    removeContact (userId, contactId) {
+        // console.log(userId);
+        // console.log(contactId);
+
+        return this.remove({
+            $or: [
+                {$and: [
                     {"userId": userId},
+                    {"contactId": contactId},
+                    {"status": true}
+                ]},
+                {$and: [
+                    {"userId": contactId},
+                    {"contactId": userId},
+                    {"status": true}
                 ]}
             ]
         }).exec();
@@ -51,7 +73,7 @@ ContactSchema.statics = {
             $and: [
                 {"userId": userId},
                 {"contactId": contactId},
-                {"status": false},
+                {"status": false}
             ]
         }).exec();
     },
@@ -62,7 +84,7 @@ ContactSchema.statics = {
             $and: [
                 {"contactId": userId},
                 {"userId": contactId},
-                {"status": false},
+                {"status": false}
             ]
         }).exec();
     },

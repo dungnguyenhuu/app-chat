@@ -1,25 +1,25 @@
 /* sockets/contact 
-    xóa yêu cầu bên tab yêu cầu kết bạn
+    xóa liên lạc bên tab danh bạ
 */
 
 import { pushSocketIdToArray, emitNotifyToArray, removeSocketIdToArray } from "./../../helpers/socketHelper";
 
 /* param: io from socket.io lib */
-let removReqContactRecevied = (io) => {
+let removeContact = (io) => {
     // lưu key userId và giá trị là các socketId, 
     let clients = {};
     io.on("connection", (socket) => {
         // thêm socketId khi user F5 hay đăng nhập
         clients = pushSocketIdToArray(clients, socket.request.user._id, socket.id);
 
-        socket.on("remove-req-contact-received", (data) => {
+        socket.on("remove-contact", (data) => {
             let currentUser = {
                 id: socket.request.user._id,
             };
 
             // emit thông báo cho người bạn mới
             if (clients[data.contactId]){
-                emitNotifyToArray(clients, data.contactId, io, "response-remove-req-contact-received", currentUser);
+                emitNotifyToArray(clients, data.contactId, io, "response-remove-contact", currentUser);
             };
         });
 
@@ -30,4 +30,4 @@ let removReqContactRecevied = (io) => {
     });
 };
 
-module.exports = removReqContactRecevied;
+module.exports = removeContact;

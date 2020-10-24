@@ -3,7 +3,7 @@ import UserModel from "./../model/userModel";
 import NotificationModel from "./../model/notificationModel";
 import _ from "lodash";
 
-const LIMIT_NUMBER_TAKEN = 1;
+const LIMIT_NUMBER_TAKEN = 8;
 
 // tìm kiếm người dùng để kết bạn
 let findUsersContact = (currentUserId, keyword) => {
@@ -58,12 +58,27 @@ let addNew = (currentUserId, contactId) => {
     });
 };
 
+// hủy bỏ liên lạc bên tab danh bạ
+let removeContact = (currentUserId, contactId) => {
+    return new Promise (async (resolve, reject) => {
+        // console.log(currentUserId);
+        // console.log(contactId);
+        // gọi removeContact() ở ContactModel
+        let removeContact = await ContactModel.removeContact(currentUserId, contactId);
+        // console.log(removeContact);
+        if(removeContact.result.n === 0) {
+            return reject(false);
+        };
+        resolve(true);
+    });
+};
+
 // hủy yêu cầu kết bạn bên tab đang chờ xác nhận
 let removeRequestContactSent = (currentUserId, contactId) => {
     return new Promise (async (resolve, reject) => {
         // gọi removeRequestContactSent() ở ContactModel
         let removeReq = await ContactModel.removeRequestContactSent(currentUserId, contactId);
-        if(removeReq.result === 0) {
+        if(removeReq.result.n === 0) {
             return reject(false);
         };
 
@@ -258,6 +273,7 @@ let readMoreContactsReceived = (currentUserId, skipNumberContactReceived) => {
 module.exports = {
     findUsersContact: findUsersContact,
     addNew: addNew,
+    removeContact: removeContact,
     removeRequestContactSent: removeRequestContactSent,
     removeRequestContactRecevied: removeRequestContactRecevied,
     approveRequestContactRecevied: approveRequestContactRecevied,

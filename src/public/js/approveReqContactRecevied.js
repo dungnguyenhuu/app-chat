@@ -29,6 +29,8 @@ function approveRequestContactRecevied() {
 
                     // thêm user vào tab danh bạ
                     $("#contacts").find("ul").prepend(userInfoHtml);
+                    removeContact(); // js/removeContact.js
+
                     // xóa user ở tab yêu cầu kết bạn
                     $(userInfo).remove();
 
@@ -37,8 +39,6 @@ function approveRequestContactRecevied() {
 
                     // giảm số thông báo navbar
                     decreaseNumberNotification("noti_contact_counter", 1); // js/caculateNotification.js
-
-                    removeContact(); // js/removeContact.js
 
                     /* thêm tiếp user ở phần chat */
 
@@ -67,7 +67,9 @@ socket.on("response-approve-req-contact-received", function(user) {
     decreaseNumberNotifContact("count-request-contact-sent"); // js/caculateNotif.js
     increaseNumberNotifContact("count-contacts"); // js/caculateNotif.js
 
+    // xóa user ở tab đang chờ xác nhận
     $("#request-contact-sent").find(`ul li[data-uid = ${ user.id }]`).remove();
+    // xóa user ở tab tìm kiếm
     $("#find-user").find(`ul li[data-uid = ${ user.id }]`).remove();
 
     let userInfoHtml = `
@@ -94,7 +96,7 @@ socket.on("response-approve-req-contact-received", function(user) {
             </div>
         </li>
     `;
-
+    // thêm user vào tab danh bạ
     $("#contacts").find("ul").prepend(userInfoHtml);
     removeContact(); // js/removeContact.js
 

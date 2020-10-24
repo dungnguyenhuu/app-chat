@@ -43,7 +43,7 @@ let addNew = async (req, res) => {
     }
 };
 
-// hủy bỏ yêu cầu kết bạn (xóa contact)
+// hủy bỏ yêu cầu đang chờ xác nhận
 let removeRequestContactSent = async (req, res) => {
     try {
         let currentUserId = req.user._id;
@@ -56,6 +56,20 @@ let removeRequestContactSent = async (req, res) => {
         return res.status(500).send(error);        
     }
 }; 
+
+// hủy bỏ yêu cầu kết bạn
+let removeRequestContactRecevied = async (req, res) => {
+    try {
+        let currentUserId = req.user._id;
+        let contactId = req.body.uid;
+
+        // gọi removeRequestContactSent() ở servive
+        let removeReq = await contact.removeRequestContactRecevied(currentUserId, contactId);
+        return res.status(200).send({success: !!removeReq});
+    } catch (error) {
+        return res.status(500).send(error);        
+    }
+};
 
 // lấy thêm user trong contact bên tab danh bạ
 let readMoreContacts = async (req, res) => {
@@ -111,6 +125,7 @@ module.exports = {
     findUsersContact: findUsersContact,
     addNew: addNew,
     removeRequestContactSent: removeRequestContactSent,
+    removeRequestContactRecevied: removeRequestContactRecevied,
     readMoreContacts: readMoreContacts,
     readMoreContactsSent: readMoreContactsSent,
     readMoreContactsReceived: readMoreContactsReceived,

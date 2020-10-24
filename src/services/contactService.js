@@ -73,6 +73,21 @@ let removeRequestContactSent = (currentUserId, contactId) => {
     });
 };
 
+let removeRequestContactRecevied = (currentUserId, contactId) => {
+    return new Promise (async (resolve, reject) => {
+        // gọi removeRequestContactSent() ở ContactModel
+        let removeReq = await ContactModel.removeRequestContactRecevied(currentUserId, contactId);
+        if(removeReq.result === 0) {
+            return reject(false);
+        };
+
+        // xóa thông báo
+        // await NotificationModel.model.removeReqContactNotification(currentUserId, contactId, NotificationModel.types.ADD_CONTACT);
+
+        resolve(true);
+    });
+};
+
 // lấy user bên tab danh bạ
 let getContacts = (currentUserId) => {
     return new Promise (async (resolve, reject) => {
@@ -220,6 +235,7 @@ module.exports = {
     findUsersContact: findUsersContact,
     addNew: addNew,
     removeRequestContactSent: removeRequestContactSent,
+    removeRequestContactRecevied: removeRequestContactRecevied,
     getContacts: getContacts,
     getContactsSend: getContactsSend,
     getContactsRecevied: getContactsRecevied,

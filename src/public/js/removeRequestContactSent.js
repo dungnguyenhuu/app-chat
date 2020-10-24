@@ -1,4 +1,5 @@
-// hủy yêu cầu kết bạn
+// hủy yêu cầu kết bạn bên tab tìm kiếm và tab đang chờ xác nhận
+
 function removeRequestContactSent() {
     $(".user-remove-request-contact-sent").unbind("click").on("click", function () {
         let targetId = $(this).data("uid");
@@ -10,7 +11,12 @@ function removeRequestContactSent() {
                 if(data.success) {
                     $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${targetId}]`).hide();
                     $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId}]`).css("display", "inline-block");
-                    decreaseNumberNotifContact("count-request-contact-sent"); // js/caculateNotuf.js
+
+                    // giảm số thông báo ở modal contact
+                    decreaseNumberNotifContact("count-request-contact-sent"); // js/caculateNotif.js
+
+                    // giảm số thông báo navbar
+                    decreaseNumberNotification("noti_contact_counter", 1); // js/caculateNotification.js
 
                     // xóa ở tab đang chờ xác nhận
                     $("#request-contact-sent").find(`li[data-uid=${targetId}]`).remove();
@@ -32,10 +38,12 @@ socket.on("response-remove-req-contact-sent", function(user) {
     // xóa ở tab yêu cầu kết bạn
     $("#request-contact-received").find(`li[data-uid=${user.id}]`).remove();
 
-    // xóa ở modal contact
-    decreaseNumberNotifContact("count-request-contact-received");
-    decreaseNumberNotification("noti_contact_counter", 1);
-    decreaseNumberNotification("noti_counter", 1);
+    // giảm số thông báo ở modal contact
+    decreaseNumberNotifContact("count-request-contact-received"); // js/caculateNotif.js
+
+    // giảm số thông báo navbar
+    decreaseNumberNotification("noti_contact_counter", 1); // js/caculateNotification.js
+    decreaseNumberNotification("noti_counter", 1); // js/caculateNotification.js
 });
 
 $(document).ready(function () {

@@ -45,12 +45,22 @@ ContactSchema.statics = {
         }).exec();
     },
 
-    // xóa liên lạc giữa 2 người 
+    // xóa yêu cầu ở tab tìm kiếm và tab đang chờ xác nhận 
     removeRequestContactSent (userId, contactId) {
         return this.remove({
             $and: [
                 {"userId": userId},
                 {"contactId": contactId},
+            ]
+        }).exec();
+    },
+
+     // xóa yêu cầu ở tab yêu cầu kết bạn 
+     removeRequestContactRecevied (userId, contactId) {
+        return this.remove({
+            $and: [
+                {"contactId": userId},
+                {"userId": contactId},
             ]
         }).exec();
     },

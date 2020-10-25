@@ -1,4 +1,5 @@
 import { notification, contact, message } from "./../services/index";
+import { bufferToBase64 } from "./../helpers/clientHelper";
 
 
 let getHome = async (req, res) => {
@@ -28,6 +29,8 @@ let getHome = async (req, res) => {
 
     let groupConversations = getAllConversation.groupConversations;
 
+    // lấy tất cả tin nhắn (với max là 30)
+    let allConversationMessages = getAllConversation.allConversationMessage;
 
     return res.render("main/home/home", {
         errors: req.flash("errors"),
@@ -44,6 +47,8 @@ let getHome = async (req, res) => {
         allConversations: allConversations,
         userConversatons: userConversatons,
         groupConversations: groupConversations,
+        allConversationMessages: allConversationMessages,
+        bufferToBase64: bufferToBase64,
     });
 };
 

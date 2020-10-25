@@ -147,7 +147,14 @@ function changeTypeChat() {
     } else {
       $(".create-group-chat").show();
     }
+  });
+};
 
+function changeScreenChat() {
+  $(".room-chat").unbind("click").on("click", function() {
+    $(".person").removeClass("active");
+    $(this).find("li").addClass("active");
+    $(this).tab("show");
   });
 };
 
@@ -182,5 +189,11 @@ $(document).ready(function() {
   // flashMasterNotify();
 
   // thay đổi kiểu chat
-  changeTypeChat()
+  changeTypeChat();
+
+  // thay đổi màn hình chat
+  changeScreenChat();
+
+  // click vào phần tử đầu khi load trang 
+  $("ul.people").find("li")[0].click();
 });

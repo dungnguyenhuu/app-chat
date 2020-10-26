@@ -1,5 +1,5 @@
 import { notification, contact, message } from "./../services/index";
-import { bufferToBase64 } from "./../helpers/clientHelper";
+import { bufferToBase64, lastItemOfArray, convertTimestamp } from "./../helpers/clientHelper";
 
 
 let getHome = async (req, res) => {
@@ -49,6 +49,8 @@ let getHome = async (req, res) => {
         groupConversations: groupConversations,
         allConversationMessages: allConversationMessages,
         bufferToBase64: bufferToBase64,
+        lastItemOfArray: lastItemOfArray,
+        convertTimestamp: convertTimestamp,
     });
 };
 

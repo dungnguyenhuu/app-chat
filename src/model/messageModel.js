@@ -11,12 +11,12 @@ let MessageSchema = new Schema({
     messageType: String,
     sender: {                                                      // người gửi
         id: String,
-        username: String,
+        name: String,
         avatar: String
     },
     receiver: {                                                     // người nhận
         id: String,
-        username: String,
+        name: String,
         avatar: String
     },
     
@@ -30,7 +30,7 @@ let MessageSchema = new Schema({
 
 MessageSchema.statics = {
     // lấy tin nhắn
-    getMessages(senderId, receiverId, limit) {
+    getMessagesPersonal(senderId, receiverId, limit) {
         return this.find({
             $or: [
                 {$and: [
@@ -43,6 +43,10 @@ MessageSchema.statics = {
                 ]},
             ]
         }).sort({"createdAt": 1}).limit(limit).exec();
+    },
+
+    getMessagesInGroup(groupId, limit){
+        return this.find({"receiverId": groupId}).sort({"createdAt": 1}).limit(limit).exec();
     },
 };
 

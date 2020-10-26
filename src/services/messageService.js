@@ -32,10 +32,16 @@ let getAllConversation = (currentUserId) => {
 
             // lấy tín nhắn để đưa ra màn hình chat
             let allConversationMessPromise =  allConversations.map(async (conversation) => {
-                let getMessages = await MessageModel.model.getMessages(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
-                
                 conversation = conversation.toObject();
-                conversation.messages = getMessages;
+
+                if(conversation.members) {
+                    let getMessages = await MessageModel.model.getMessagesInGroup(currentUserId, LIMIT_MESSAGES_TAKEN);
+                    conversation.messages = getMessages;
+                } else {
+                    let getMessages = await MessageModel.model.getMessagesPersonal(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
+                    conversation.messages = getMessages;
+                }
+
                 return conversation;
             });
 

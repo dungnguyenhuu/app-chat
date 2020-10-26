@@ -45,9 +45,14 @@ UserSchema.statics = {
     },
 
     // tìm kiếm theo id
-    findUserById(id){
+    findUserByIdForUpdatePass(id){
         // console.log(id);
         return this.findById(id).exec();
+    },
+    
+    findUserByIdForSession(id){
+        // console.log(id);
+        return this.findById(id, {"local.password": 0}).exec();
     },
 
     // tìm kiếm theo id, lấy ra một số thông tin

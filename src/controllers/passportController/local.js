@@ -40,7 +40,7 @@ let initPassportLocal = () => {
 
     // lấy thông tin của user từ session
     passport.deserializeUser((id, done) => {
-        UserModel.findUserById(id)
+        UserModel.findUserByIdForSession(id)
             .then(user => {
                 // console.log(user._id);
                 return done(null, user);

@@ -16,4 +16,6 @@ export const appConfig ={
 
     SESSION_KEY: "express.sid",
     SESSION_SECRET: "mySecret",
+
+    general_avatar_group_chat: "group-avatar-trungquandev.png",
 };

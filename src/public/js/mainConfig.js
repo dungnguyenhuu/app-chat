@@ -10,19 +10,19 @@ function nineScrollLeft() {
   });
 }
 
-function nineScrollRight() {
-  $('.right .chat').niceScroll({
+function nineScrollRight(divId) {
+  $(`.right .chat[data-chat = ${divId}]`).niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
     cursorcolor: '#ECECEC',
     cursorwidth: '7px',
     scrollspeed: 50
   });
-  $('.right .chat').scrollTop($('.right .chat')[0].scrollHeight);
+  $(`.right .chat[data-chat = ${divId}]`).scrollTop($(`.right .chat[data-chat = ${divId}]`)[0].scrollHeight);
 }
 
-function enableEmojioneArea(chatId) {
-  $('.write-chat[data-chat="' + chatId + '"]').emojioneArea({
+function enableEmojioneArea(divId) {
+  $(`#write-chat-${divId}`).emojioneArea({
     standalone: false,
     pickerPosition: 'top',
     filtersPosition: 'bottom',
@@ -34,8 +34,13 @@ function enableEmojioneArea(chatId) {
     shortnames: false,
     events: {
       keyup: function(editor, event) {
+        // gán giá trị thay đổi vào input bị ẩn
         $('.write-chat').val(this.getText());
-      }
+      },
+      click: function () {
+        // bật lắng nghe DOM cho việc chat tin nhắn văn bản, emoji
+        textEmojiChat(divId);
+      },
     },
   });
   $('.icon-chat').bind('click', function(event) {
@@ -81,25 +86,31 @@ function configNotification() {
 }
 
 function gridPhotos(layoutNumber) {
-  let countRows = Math.ceil($('#imagesModal').find('div.all-images>img').length / layoutNumber);
-  let layoutStr = new Array(countRows).fill(layoutNumber).join("");
-  $('#imagesModal').find('div.all-images').photosetGrid({
-    highresLinks: true,
-    rel: 'withhearts-gallery',
-    gutter: '2px',
-    layout: layoutStr,
-    onComplete: function() {
-      $('.all-images').css({
-        'visibility': 'visible'
-      });
-      $('.all-images a').colorbox({
-        photo: true,
-        scalePhotos: true,
-        maxHeight: '90%',
-        maxWidth: '90%'
-      });
-    }
+  $(".show-images").unbind("click").on("click", function() {
+    let href = $(this).attr("href");
+    let modalImageId = href.replace("#", "");
+
+    let countRows = Math.ceil($(`#${modalImageId}`).find("div.all-images>img").length / layoutNumber);
+    let layoutStr = new Array(countRows).fill(layoutNumber).join("");
+    $(`#${modalImageId}`).find("div.all-images").photosetGrid({
+      highresLinks: true,
+      rel: "withhearts-gallery",
+      gutter: "2px",
+      layout: layoutStr,
+      onComplete: function() {
+        $(`#${modalImageId}`).find(".all-images").css({
+          "visibility": "visible"
+        });
+        $(`#${modalImageId}`).find(".all-images a").colorbox({
+          photo: true,
+          scalePhotos: true,
+          maxHeight: "90%",
+          maxWidth: "90%"
+        });
+      }
+    });
   });
+
 }
 
 function showButtonGroupChat() {
@@ -148,6 +159,35 @@ function cancelCreateGroup() {
 //   }
 // };
 
+function changeTypeChat(){
+  $("#select-type-chat").bind("change", function() {
+    let optionSelected = $("option:selected", this);
+    optionSelected.tab("show");
+
+    if($(this).val() === "user-chat") {
+      $(".create-group-chat").hide();
+    } else {
+      $(".create-group-chat").show();
+    }
+  });
+}
+
+function changeScreenChat() {
+  $(".room-chat").unbind("click").on("click", function() {
+    $(".person").removeClass("active");
+    $(this).find("li").addClass("active");
+    $(this).tab("show");
+
+    //cấu hình thanh cuộn bên vùng chat bên phải
+    let divId = $(this).find("li").data("chat");
+    nineScrollRight(divId);
+
+    
+  // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
+  enableEmojioneArea(divId);
+  });
+}
+
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -157,16 +197,9 @@ $(document).ready(function() {
 
   // Cấu hình thanh cuộn
   nineScrollLeft();
-  nineScrollRight();
-
-  // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
-  enableEmojioneArea("17071995");
 
   // Icon loading khi chạy ajax
   ajaxLoading();
-
-  // Hiển thị button mở modal tạo nhóm trò chuyện
-  showButtonGroupChat();
 
   // Hiển thị hình ảnh grid slide trong modal tất cả ảnh, tham số truyền vào là số ảnh được hiển thị trên 1 hàng.
   // Tham số chỉ được phép trong khoảng từ 1 đến 5
@@ -180,4 +213,12 @@ $(document).ready(function() {
 
   // hien thong bao loi
   // flashMasterNotify();
+
+  // thay đổi kiểu trò chuyện
+  changeTypeChat();
+
+  // thay đổi màn hình chat
+  changeScreenChat();
+
+  $("ul.people").find("a")[0].click();
 });

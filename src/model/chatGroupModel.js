@@ -12,8 +12,30 @@ let ChatGroupSchema = new Schema({
         {userId: String}
     ],
     createdAt: {type: Number, default: Date.now},        // ngày tạo, mặc định là thời gian khởi tạo
-    updatedAt: {type: Number, default: null},            // ngày cập nhập, mặc định là null
+    updatedAt: {type: Number, default: Date.now},            // ngày cập nhập, mặc định là null
     deletedAt: {type: Number, default: null}             // ngày xóa, mặc định là null
 });
 
-module.exports = mongoose.model("chatGroup", ChatGroupSchema);
+ChatGroupSchema.statics = {
+    // lấy ra các nhóm trò chuyện
+    getChatGroups(userId, limit) {
+        // console.log(userId);
+        // console.log(limit);
+        return this.find({
+            "members": {$elemMatch: {"userId": userId}}
+        }).sort({"updatedAt": -1}).limit(limit).exec();
+    },
+
+    getChatGroupById(groupId) {
+        return this.findById(groupId).exec();
+    },
+
+    updateWhenHasNewMessage(groupId, newMessageAmount) {
+        return this.findByIdAndUpdate(groupId, {
+            "messageAmount": newMessageAmount,
+            "updatedAt": Date.now(),
+        }).exec();
+    },
+};
+
+module.exports = mongoose.model("chat-group", ChatGroupSchema);

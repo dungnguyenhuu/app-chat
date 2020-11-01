@@ -47,9 +47,9 @@ let updateAvatar = (req, res) => {
             let userUpdate = await user.updateUser(req.user._id, updateUserItem);
 
             // xóa ảnh user cũ
-            if(userUpdate.avatar !== "avatar-default.jpg") {
-                await fsExtra.remove(`${appConfig.avatar_directory}/${userUpdate.avatar}`);
-            };
+                // if(userUpdate.avatar !== "avatar-default.jpg") {
+                //     await fsExtra.remove(`${appConfig.avatar_directory}/${userUpdate.avatar}`);
+                // };
 
             // kết quả trả về khi cập nhập thành công
             let result = {

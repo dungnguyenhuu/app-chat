@@ -97,7 +97,10 @@ ContactSchema.statics = {
                 {"userId": contactId},
                 {"status": false},
             ]
-        }, {"status": true}).exec();
+        }, {
+            "status": true,
+            "updatedAt": Date.now(),
+        }).exec();
     },
 
     // lấy users trong danh bạ
@@ -110,7 +113,7 @@ ContactSchema.statics = {
                 ]},
                 {"status": true},
             ]
-        }).sort({"createdAt": -1}).limit(limit).exec();
+        }).sort({"updatedAt": -1}).limit(limit).exec();
     },
 
     // lấy tổng số user trong danh bạ
@@ -197,6 +200,23 @@ ContactSchema.statics = {
                 {"status": false},
             ]
         }).sort({"createdAt": -1}).skip(skip).limit(limit).exec();
+    },
+
+    updateWhenHasNewMessage(userId, contactId){
+        return this.update({
+            $or: [
+                {$and: [
+                    {"userId": userId},
+                    {"contactId": contactId},
+                ]},
+                {$and: [
+                    {"userId": contactId},
+                    {"contactId": userId},
+                ]}
+            ]
+        }, {
+            "updatedAt": Date.now(),  
+        }).exec();
     },
 
 };

@@ -44,10 +44,16 @@ UserSchema.statics = {
         return this.findOne({"local.email": email}).exec();
     },
 
-    // tìm kiếm theo id
-    findUserById(id){
+    // tìm kiếm theo id có pass
+    findUserByIdToUpdatePass(id){
         // console.log(id);
         return this.findById(id).exec();
+    },
+
+    // tìm kiếm theo id có pass
+    findUserByIdForSession(id){
+        // console.log(id);
+        return this.findById(id, {"local.password": 0}).exec();
     },
 
     // tìm kiếm theo id, lấy ra một số thông tin

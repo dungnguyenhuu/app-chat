@@ -677,7 +677,7 @@ label:focus,
 }
 
 .left a.create-group-chat {
-  display: none;
+  display: block;
   float: left;
   width: 40px;
   height: 40px;
@@ -1079,6 +1079,7 @@ label:focus,
   align-self: flex-start;
   -webkit-animation-name: slideFromLeft;
   animation-name: slideFromLeft;
+  position: relative;
 }
 
 .right .bubble.you:before {
@@ -1094,6 +1095,7 @@ label:focus,
   align-self: flex-end;
   -webkit-animation-name: slideFromRight;
   animation-name: slideFromRight;
+  position: relative;
 }
 
 .right .bubble.me:before {
@@ -1105,8 +1107,19 @@ label:focus,
   float: right;
 }
 
+.right .bubble.me img.avatar-small{
+  position: absolute;
+  right: -32px;
+  display: none;
+}
+
 .right .bubble.you img {
   float: left;
+}
+
+.right .bubble.you img.avatar-small {
+  position: absolute;
+  left: -35px;
 }
 
 .right .bubble.me a {
@@ -1288,7 +1301,7 @@ label:focus,
 
 .notif-readed-false {
   background: #E3E8F8;
-};
+}
 
 .display-none {
   display: none;
@@ -1332,4 +1345,9 @@ label:focus,
 
 .display-important {
   display: inline-block !important;
+}
+
+#screen-chat {
+  width: 100%;
+  height: 100%;
 }

@@ -47,12 +47,12 @@ MessageSchema.statics = {
                     {"receiverId": senderId}
                 ]}
             ]
-        }).sort({"createdAt": 1}).limit(limit).exec();
+        }).sort({"createdAt": -1}).limit(limit).exec();
     },
 
     // lấy tin nhắn trong nhóm 
     getMessagesGroup(groupId, limit) {
-        return this.find({"receiverId": groupId}).sort({"createdAt": 1}).limit(limit).exec();
+        return this.find({"receiverId": groupId}).sort({"createdAt": -1}).limit(limit).exec();
     },
 };
 

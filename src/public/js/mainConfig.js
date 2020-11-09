@@ -18,6 +18,7 @@ function nineScrollRight(divId) {
     cursorwidth: '7px',
     scrollspeed: 50
   });
+  // console.log($(`.right .chat[data-chat = ${divId}]`)[0].scrollHeight);
   $(`.right .chat[data-chat = ${divId}]`).scrollTop($(`.right .chat[data-chat = ${divId}]`)[0].scrollHeight);
 }
 
@@ -40,6 +41,10 @@ function enableEmojioneArea(divId) {
       click: function () {
         // bật lắng nghe DOM cho việc chat tin nhắn văn bản, emoji
         textEmojiChat(divId);
+        typingOn(divId);
+      },
+      blur: function() {
+        typingOff(divId);
       },
     },
   });
@@ -174,19 +179,27 @@ function changeTypeChat(){
 
 function changeScreenChat() {
   $(".room-chat").unbind("click").on("click", function() {
+    let divId = $(this).find("li").data("chat");
+
     $(".person").removeClass("active");
-    $(this).find("li").addClass("active");
+    $(`.person[data-chat=${divId}]`).addClass("active");
     $(this).tab("show");
 
     //cấu hình thanh cuộn bên vùng chat bên phải
-    let divId = $(this).find("li").data("chat");
     nineScrollRight(divId);
-
     
   // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
   enableEmojioneArea(divId);
   });
-}
+};
+
+function convertEmoji() {
+  $(".convert-emoji").each(function() {
+    var original = $(this).html();
+    var converted = emojione.toImage(original);
+    $(this).html(converted);
+});
+};
 
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
@@ -220,5 +233,9 @@ $(document).ready(function() {
   // thay đổi màn hình chat
   changeScreenChat();
 
+  // chuyển các unicode thành hình ảnh biểu tượng cảm xúc
+  convertEmoji();
+
   $("ul.people").find("a")[0].click();
+
 });

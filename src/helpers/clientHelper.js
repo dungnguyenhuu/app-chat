@@ -1,5 +1,5 @@
 import moment from "moment";
-import "moment/locale/vi";
+// import "moment/locale/vi";
 
 export let bufferToBase64 = (bufferForm) => {
     return Buffer.from(bufferForm).toString("base64");

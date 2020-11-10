@@ -1,9 +1,8 @@
 import multer from "multer";
-import {appConfig} from "./../config/appConfig";
-import {transErrors, transSuccess} from "./../../lang/vi";
+import { appConfig } from "./../config/appConfig";
+import { transErrors, transSuccess } from "./../../lang/vi";
 import uuidv4 from "uuid/v4";
-import {user} from "./../services/index";
-import fsExtra from "fs-extra";
+import { user } from "./../services/index";
 import { validationResult } from "express-validator/check";
 
 

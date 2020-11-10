@@ -5,6 +5,7 @@ import { appConfig } from "./../config/appConfig";
 import { transErrors, transSuccess } from "./../../lang/vi";
 import fsExtra from "fs-extra";
 
+// xử lý text emoji chat
 let addNewTextEmoji = async (req, res) => {
     let errorArr = [];
     // kiểm tra dữ liệu nhập có lỗi
@@ -38,6 +39,7 @@ let addNewTextEmoji = async (req, res) => {
     }
 };
 
+// xử lý image chat
 let storageImageChat = multer.diskStorage({
     destination: (req, file, callback) => {
         // callback(error, seccess);
@@ -81,7 +83,7 @@ let addNewImage =  (req, res) => {
             // remove image, vì đã lưu trong mongoDb
             await fsExtra.remove(`${appConfig.image_message_directory}/${newMessage.file.fileName}`);
             
-            res.status(200).send(newMessage);
+            res.status(200).send({message: newMessage});
         } catch (error) {
             console.log(error);
             console.log("loi o addnewImage messageController");
@@ -91,7 +93,57 @@ let addNewImage =  (req, res) => {
     
 };
 
+// xử lý attachment chat
+let storageAttachmentChat = multer.diskStorage({
+    destination: (req, file, callback) => {
+        // callback(error, seccess);
+        callback(null, appConfig.attachment_message_directory);
+    },
+    filename: (req, file, callback) => {
+        let attachmentName = `${file.originalname}`;
+        callback(null, attachmentName);
+    }
+});
+
+let attachmentMessageUploadFile = multer({
+    storage: storageAttachmentChat,
+    limits: {fileSize: appConfig.attachment_message_limit_size},
+}).single("my-attachment-chat");
+
+let addNewAttachment = (req, res) => {
+    attachmentMessageUploadFile(req, res, async (error) => {
+        if(error) {
+            if(error.message) {
+                return res.status(500).send(transErrors.attachment_message_size);
+            }
+            return res.status(500).send(error);
+        }
+        try {
+            let sender = {
+                id: req.user._id,
+                name: req.user.username,
+                avatar: req.user.avatar,
+            };
+            let receiverId = req.body.uid;
+            let messageVal = req.file;
+            let isChatGroup = req.body.isChatGroup;
+    
+            let newMessage = await message.addNewattAchment(sender, receiverId, messageVal, isChatGroup);
+            // remove attachment, vì đã lưu trong mongoDb
+            await fsExtra.remove(`${appConfig.attachment_message_directory}/${newMessage.file.fileName}`);
+            
+            res.status(200).send({message: newMessage});
+        } catch (error) {
+            console.log(error);
+            console.log("loi o addnewAttachment messageController");
+            return res.status(500).send(error);
+        }
+    });
+    
+};
+
 module.exports = {
     addNewTextEmoji: addNewTextEmoji,
     addNewImage: addNewImage,
+    addNewAttachment: addNewAttachment,
 };

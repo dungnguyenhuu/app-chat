@@ -95,6 +95,8 @@ function gridPhotos(layoutNumber) {
     let href = $(this).attr("href");
     let modalImageId = href.replace("#", "");
 
+    let originDataImage = $(`#${modalImageId}`).find("div.modal-body").html();
+
     let countRows = Math.ceil($(`#${modalImageId}`).find("div.all-images>img").length / layoutNumber);
     let layoutStr = new Array(countRows).fill(layoutNumber).join("");
     $(`#${modalImageId}`).find("div.all-images").photosetGrid({
@@ -113,6 +115,11 @@ function gridPhotos(layoutNumber) {
           maxWidth: "90%"
         });
       }
+    });
+
+    // bắt sự kiện đóng modal
+    $(`#${modalImageId}`).on("hidden.bs.modal", function () {
+      $(this).find("div.modal-body").html(originDataImage);
     });
   });
 
@@ -193,6 +200,9 @@ function changeScreenChat() {
 
     // bật lắng nghe DOM cho việc chat tin nhắn hình ảnh
     imageChat(divId);
+
+    // bật lắng nghe DOM cho việc chat tin nhắn tệp đính kèm
+    attachmentChat(divId);
   });
 };
 
@@ -201,8 +211,14 @@ function convertEmoji() {
     var original = $(this).html();
     var converted = emojione.toImage(original);
     $(this).html(converted);
-});
+  });
 };
+
+function bufferToBase64(buffer) {
+  return btoa(
+      new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+    );
+}
 
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact

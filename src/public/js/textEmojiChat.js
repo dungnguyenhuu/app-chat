@@ -24,7 +24,7 @@ function textEmojiChat (divId) {
                         message: data,
                     };
                     // console.log(data);
-                    // xử lý tin nhắn từ controller trước khi hiện ra
+                    // 1. xử lý tin nhắn từ controller trước khi hiện ra
                     let messageOfMe = $(`<div class="convert-emoji bubble me" data-mess-id="${data._id}"></div>`);
                     messageOfMe.text(data.text);
                     let convertEmojiMessage = emojione.toImage(messageOfMe.html());
@@ -40,19 +40,19 @@ function textEmojiChat (divId) {
                     }
                     messageOfMe.html(convertEmojiMessage);
 
-                    // thêm vào cuối màn hình chat
+                    // 2. thêm vào cuối màn hình chat
                     $(`.right .chat[data-chat=${divId}]`).append(messageOfMe);
                     nineScrollRight(divId);
 
-                    // trả lại vùng nhập tin nhắn về trống
+                    // 3. trả lại vùng nhập tin nhắn về trống
                     $(`#write-chat-${divId}`).val("");
                     $(".emojionearea").find(".emojionearea-editor").text("");
 
-                    // cập nhập vùng preview tin nhắn và time bên leftside
+                    // 4. cập nhập vùng preview tin nhắn và time bên leftside
                     $(`.person[data-chat=${divId}]`).find("span.time").removeClass("message-time-realtime").html(moment(data.createdAt).local("vi").startOf("seconds").fromNow());
                     $(`.person[data-chat=${divId}]`).find("span.preview").html(emojione.toImage(data.text));
 
-                    // đưa contact lên đầu bên leftside
+                    // 5. đưa contact lên đầu bên leftside
                     $(`.person[data-chat=${divId}]`).on("leftside.moveConversationToTheTop", function() {
                         let dataToMove = $(this).parent();
                         $(this).closest("ul").prepend(dataToMove);
@@ -60,10 +60,10 @@ function textEmojiChat (divId) {
                     });
                     $(`.person[data-chat=${divId}]`).trigger("leftside.moveConversationToTheTop");
 
-                    // emit realtime
+                    // 6. emit realtime
                     socket.emit("chat-text-emoji", dataToEmit);
 
-                    // emit remove typing real-time
+                    // 7. emit remove typing real-time
                     typingOff(divId);
                     let checkTyping = $(`.chat[data-chat=${divId}]`).find("div.bubble-typing-gif")
                     if (checkTyping.length){
@@ -80,7 +80,7 @@ $(document).ready(function () {
     socket.on("response-chat-text-emoji", function(response) {
         // console.log(response);
         let divId = "";
-        // xử lý tin nhắn từ controller trước khi hiện ra
+        // 1. xử lý tin nhắn từ controller trước khi hiện ra
         let messageOfYou = $(`<div class="convert-emoji bubble you" data-mess-id="${response.message._id}"></div>`);
         messageOfYou.text(response.message.text);
         let convertEmojiMessage = emojione.toImage(messageOfYou.text());
@@ -98,7 +98,7 @@ $(document).ready(function () {
             messageOfYou.html(convertEmojiMessage);
         }
         
-        // thêm vào cuối màn hình chat
+        // 2. thêm vào cuối màn hình chat
         if(response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
             $(`.right .chat[data-chat=${divId}]`).append(messageOfYou);
             nineScrollRight(divId);
@@ -106,11 +106,11 @@ $(document).ready(function () {
             $(`.person[data-chat=${divId}]`).find("span.time").addClass("message-time-realtime").html(moment(response.message.createdAt).local("vi").startOf("seconds").fromNow());
         }
 
-        // cập nhập vùng preview tin nhắn và time bên leftside
+        // 4. cập nhập vùng preview tin nhắn và time bên leftside
         $(`.person[data-chat=${divId}]`).find("span.time").html(moment(response.message.createdAt).local("vi").startOf("seconds").fromNow());
         $(`.person[data-chat=${divId}]`).find("span.preview").html(emojione.toImage(response.message.text));
 
-        // đưa contact lên đầu bên leftside
+        // 5. đưa contact lên đầu bên leftside
         $(`.person[data-chat=${divId}]`).on("leftside.moveConversationToTheTop", function() {
             let dataToMove = $(this).parent();
             $(this).closest("ul").prepend(dataToMove);

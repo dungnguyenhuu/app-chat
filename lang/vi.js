@@ -1,5 +1,5 @@
 export const transValidation = {
-    email_incorrect: "Email phải có dạng example@gamil.com!",
+    email_incorrect: "Email phải có dạng example@gmail.com!",
     gender_incorrect: "Bạn đã sửa trường giới tính của bạn?",
     password_incorrect: "Mật khẩu cần chứa ít nhất 8 ký tự, bao gồm chữ hoa, chữa thường, chữ số và ký tự. VD: Aa@12345",
     password_comfirmation_incorrect: "Nhập lại mật khẩu chưa chính xác!!",
@@ -8,6 +8,7 @@ export const transValidation = {
     upadate_address: "Địa chỉ giới hạn trong khoảng 3 - 30 kí tự",
     upadate_phone: "Số điện thoại Việt Nam bắt đầu bằng số 0, giới hạn trong khoảng 10-11 kí tự",
     keyword_find_user: "Lỗi từ khóa tìm kiếm, không được có kí tự đặc biệt",
+    message_text_emoji_incorrect: "Tin nhắn không hợp lệ, tối thiểu 1 kí tự, tối đa 400 kí tự",
 };
 
 export const transErrors = {
@@ -20,6 +21,12 @@ export const transErrors = {
     avatar_type: "Kiểu file không hợp lệ, chỉ chấp nhận jpg, png.",
     avatar_size: "Ảnh upload tối đa 1MB",
     user_current_pass_failed: "Mật khẩu hiện tại không chính xác",
+    conversation_not_found: "Cuộc trò chuyện không tồn tại",
+
+    image_message_type: "Kiểu file không hợp lệ, chỉ chấp nhận jpg, png.",
+    image_message_size: "Ảnh upload tối đa 1MB",
+
+    attachment_message_size: "Tệp đính kèm upload tối đa 1MB",
 };
 
 export const transSuccess = {

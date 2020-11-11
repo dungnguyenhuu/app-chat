@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import mongoose from "mongoose";
 import { stringify } from "uuid";
+=======
+import mongoose from "mongoose"
+>>>>>>> revert1
 
 let Schema = mongoose.Schema;
 
@@ -7,7 +11,11 @@ let Schema = mongoose.Schema;
 let MessageSchema = new Schema({
     senderId: String,
     receiverId: String,
+<<<<<<< HEAD
     coversationType: String,
+=======
+    conversationType: String,
+>>>>>>> revert1
     messageType: String,
     sender: {                                                      // người gửi
         id: String,
@@ -29,12 +37,22 @@ let MessageSchema = new Schema({
 });
 
 MessageSchema.statics = {
+<<<<<<< HEAD
     // lấy tin nhắn
+=======
+
+    createNew(item) {
+        return this.create(item);
+    },
+
+    // lấy tin nhắn cá nhân
+>>>>>>> revert1
     getMessagesPersonal(senderId, receiverId, limit) {
         return this.find({
             $or: [
                 {$and: [
                     {"senderId": senderId},
+<<<<<<< HEAD
                     {"receiverId": receiverId},
                 ]},
                 {$and: [
@@ -56,6 +74,30 @@ const MESSAGE_CONVERSATION_TYPES = {
 };
 
 const MESSAGE_TYPES = {
+=======
+                    {"receiverId": receiverId}
+                ]},
+                {$and: [
+                    {"senderId": receiverId},
+                    {"receiverId": senderId}
+                ]}
+            ]
+        }).sort({"createdAt": -1}).limit(limit).exec();
+    },
+
+    // lấy tin nhắn trong nhóm 
+    getMessagesGroup(groupId, limit) {
+        return this.find({"receiverId": groupId}).sort({"createdAt": -1}).limit(limit).exec();
+    },
+};
+
+const MESSAGE_CONVERSATION_TYPE = {
+    PERSONAL: "personal",   
+    GROUP: "group"
+};
+
+const MESSAGE_TYPE = {
+>>>>>>> revert1
     TEXT: "text",
     IMAGE: "image",
     FILE: "file",
@@ -63,6 +105,11 @@ const MESSAGE_TYPES = {
 
 module.exports = {
     model: mongoose.model("message", MessageSchema),
+<<<<<<< HEAD
     conversationTypes: MESSAGE_CONVERSATION_TYPES,
     messageType: MESSAGE_TYPES,
+=======
+    conversationTypes: MESSAGE_CONVERSATION_TYPE,
+    messageTypes: MESSAGE_TYPE,
+>>>>>>> revert1
 };

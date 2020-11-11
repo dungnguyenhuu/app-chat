@@ -39,6 +39,7 @@ app.use(connectFlash());
 app.use(cookieParser());
 
 // congfig passport
+// thêm is
 app.use(passport.initialize());
 app.use(passport.session());
 

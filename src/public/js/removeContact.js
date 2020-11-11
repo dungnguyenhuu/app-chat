@@ -8,7 +8,7 @@ function removeContact() {
         Swal.fire({
             title: `Bạn chắc chắn muốn hủy liên lạc với ${username}?`,
             text: "Bạn không thể hoàn tác quá trình này!",
-            types: "warning",
+            type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#2ECC71",
             cancelButtonColor: "#FF7675",

@@ -409,7 +409,7 @@ label:focus,
   background-color: #eceff1;
 }
 
-.list-attachs li {
+.list-attachments li {
   border-bottom: 1px solid #dfe6e9;
   width: 90%;
   height: auto;
@@ -418,7 +418,7 @@ label:focus,
   list-style-type: none;
 }
 
-.list-attachs li:hover {
+.list-attachments li:hover {
   cursor: pointer;
   background-color: #eceff1;
 }
@@ -837,9 +837,9 @@ label:focus,
   flex-direction: column;
 }
 
-#image-chat,
-#attach-chat {
-  display: none;
+.image-chat,
+.attachment-chat {
+  display: none !important;
 }
 
 .room-chat:hover,
@@ -895,11 +895,11 @@ label:focus,
   }
 }
 
-.bubble-attach-file {
+.bubble-attachment-file {
   background-color: #ECF0FE !important;
 }
 
-.bubble-attach-file:before {
+.bubble-attachment-file:before {
   background-color: #ECF0FE !important;
 }
 
@@ -1079,6 +1079,7 @@ label:focus,
   align-self: flex-start;
   -webkit-animation-name: slideFromLeft;
   animation-name: slideFromLeft;
+  position: relative;
 }
 
 .right .bubble.you:before {
@@ -1094,6 +1095,7 @@ label:focus,
   align-self: flex-end;
   -webkit-animation-name: slideFromRight;
   animation-name: slideFromRight;
+  position: relative;
 }
 
 .right .bubble.me:before {
@@ -1105,8 +1107,15 @@ label:focus,
   float: right;
 }
 
+<<<<<<< HEAD
 .right .bubble.me img.avatar-small {
   margin-left: 10px;
+=======
+.right .bubble.me img.avatar-small{
+  position: absolute;
+  right: -32px;
+  display: none;
+>>>>>>> revert1
 }
 
 .right .bubble.you img {
@@ -1114,7 +1123,12 @@ label:focus,
 }
 
 .right .bubble.you img.avatar-small {
+<<<<<<< HEAD
   margin-right: 10px;
+=======
+  position: absolute;
+  left: -35px;
+>>>>>>> revert1
 }
 
 .right .bubble.me a {
@@ -1296,7 +1310,7 @@ label:focus,
 
 .notif-readed-false {
   background: #E3E8F8;
-};
+}
 
 .display-none {
   display: none;
@@ -1345,11 +1359,26 @@ label:focus,
   display: inline-block !important;
 }
 
+<<<<<<< HEAD
 .tab-content > .tab-pane{
   background-color: white;
 }
 
+=======
+>>>>>>> revert1
 #screen-chat {
   width: 100%;
   height: 100%;
 }
+<<<<<<< HEAD
+=======
+
+.show-number-member {
+  color: #2c3e50 !important;
+}
+
+.message-time-realtime {
+  color: black !important;
+  font-weight: bold;
+}
+>>>>>>> revert1

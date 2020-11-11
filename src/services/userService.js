@@ -16,7 +16,11 @@ let updateUser = (id, item) => {
 */
 let updatePass = (id, dataUpdate) => {
     return new Promise (async (resolve, reject) => {
+<<<<<<< HEAD
         let currentUser = await UserModel.findUserByIdForUpdatePass(id);
+=======
+        let currentUser = await UserModel.findUserByIdToUpdatePass(id);
+>>>>>>> revert1
         if(!currentUser){
             return reject.apply(transErrors.account_undefine);
         }

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <% allConversationMessages.forEach( function(conversation, index) { %>
+=======
+<% allConversationMessages.forEach(function(conversation, index) { %>
+>>>>>>> revert1
     <div class="modal fade" id="imagesModal_<%= conversation._id %>" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -9,13 +13,25 @@
                 <div class="modal-body">
                     <div class="all-images" style="visibility: hidden;">
                         <% conversation.messages.forEach(function(message) { %>
+<<<<<<< HEAD
                             <% if(message.messageType == "image") { %>
                                 <img src="data:<%= message.file.contentType %>; base64, <%= bufferToBase64(message.file.data) %>">
                             <% } %>
                         <% }) %>
+=======
+                            <% if(message.messageType === "image") { %>
+                                <img src="data:<%= message.file.contentType %>; base64, <%= bufferToBase64(message.file.data) %>">
+                            <% } %>
+                        <% }) %>   
+>>>>>>> revert1
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 <% }); %>
+=======
+<% }) %>
+
+>>>>>>> revert1

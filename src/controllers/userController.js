@@ -1,9 +1,8 @@
 import multer from "multer";
-import {appConfig} from "./../config/appConfig";
-import {transErrors, transSuccess} from "./../../lang/vi";
+import { appConfig } from "./../config/appConfig";
+import { transErrors, transSuccess } from "./../../lang/vi";
 import uuidv4 from "uuid/v4";
-import {user} from "./../services/index";
-import fsExtra from "fs-extra";
+import { user } from "./../services/index";
 import { validationResult } from "express-validator/check";
 
 
@@ -46,10 +45,17 @@ let updateAvatar = (req, res) => {
             // cập nhập user
             let userUpdate = await user.updateUser(req.user._id, updateUserItem);
 
+<<<<<<< HEAD
             // xóa ảnh user cũ thì mở comment còn giờ thì chưa xóa
             // if(userUpdate.avatar !== "avatar-default.jpg") {
             //     await fsExtra.remove(`${appConfig.avatar_directory}/${userUpdate.avatar}`);
             // };
+=======
+            // xóa ảnh user cũ
+                // if(userUpdate.avatar !== "avatar-default.jpg") {
+                //     await fsExtra.remove(`${appConfig.avatar_directory}/${userUpdate.avatar}`);
+                // };
+>>>>>>> revert1
 
             // kết quả trả về khi cập nhập thành công
             let result = {

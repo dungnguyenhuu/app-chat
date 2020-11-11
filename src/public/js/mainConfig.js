@@ -11,14 +11,23 @@ function nineScrollLeft() {
 }
 
 function nineScrollRight(divId) {
+<<<<<<< HEAD
   $(`.right .chat[data-chat=${divId}]`).niceScroll({
+=======
+  $(`.right .chat[data-chat = ${divId}]`).niceScroll({
+>>>>>>> revert1
     smoothscroll: true,
     horizrailenabled: false,
     cursorcolor: '#ECECEC',
     cursorwidth: '7px',
     scrollspeed: 50
   });
+<<<<<<< HEAD
   $(`.right .chat[data-chat=${divId}]`).scrollTop($(`.right .chat[data-chat=${divId}]`)[0].scrollHeight);
+=======
+  // console.log($(`.right .chat[data-chat = ${divId}]`)[0].scrollHeight);
+  $(`.right .chat[data-chat = ${divId}]`).scrollTop($(`.right .chat[data-chat = ${divId}]`)[0].scrollHeight);
+>>>>>>> revert1
 }
 
 function enableEmojioneArea(divId) {
@@ -34,11 +43,25 @@ function enableEmojioneArea(divId) {
     shortnames: false,
     events: {
       keyup: function(editor, event) {
+<<<<<<< HEAD
         $(`#write-chat-${divId}`).val(this.getText());
       },
       click: function() {
         textAndEmojiChat(divId); // js/textAndEmojiChat.js
       }
+=======
+        // gán giá trị thay đổi vào input bị ẩn
+        $('.write-chat').val(this.getText());
+      },
+      click: function () {
+        // bật lắng nghe DOM cho việc chat tin nhắn văn bản, emoji
+        textEmojiChat(divId);
+        typingOn(divId);
+      },
+      blur: function() {
+        typingOff(divId);
+      },
+>>>>>>> revert1
     },
   });
   $('.icon-chat').bind('click', function(event) {
@@ -88,6 +111,7 @@ function gridPhotos(layoutNumber) {
     let href = $(this).attr("href");
     let modalImageId = href.replace("#", "");
 
+<<<<<<< HEAD
     let countRows = Math.ceil($(`${modalImageId}`).find('div.all-images>img').length / layoutNumber);
     let layoutStr = new Array(countRows).fill(layoutNumber).join("");
     $(`${modalImageId}`).find('div.all-images').photosetGrid({
@@ -107,6 +131,46 @@ function gridPhotos(layoutNumber) {
         });
       }
     });
+=======
+    let originDataImage = $(`#${modalImageId}`).find("div.modal-body").html();
+
+    let countRows = Math.ceil($(`#${modalImageId}`).find("div.all-images>img").length / layoutNumber);
+    let layoutStr = new Array(countRows).fill(layoutNumber).join("");
+    $(`#${modalImageId}`).find("div.all-images").photosetGrid({
+      highresLinks: true,
+      rel: "withhearts-gallery",
+      gutter: "2px",
+      layout: layoutStr,
+      onComplete: function() {
+        $(`#${modalImageId}`).find(".all-images").css({
+          "visibility": "visible"
+        });
+        $(`#${modalImageId}`).find(".all-images a").colorbox({
+          photo: true,
+          scalePhotos: true,
+          maxHeight: "90%",
+          maxWidth: "90%"
+        });
+      }
+    });
+
+    // bắt sự kiện đóng modal
+    $(`#${modalImageId}`).on("hidden.bs.modal", function () {
+      $(this).find("div.modal-body").html(originDataImage);
+    });
+  });
+
+}
+
+function showButtonGroupChat() {
+  $('#select-type-chat').bind('change', function() {
+    if ($(this).val() === 'group-chat') {
+      $('.create-group-chat').show();
+      // Do something...
+    } else {
+      $('.create-group-chat').hide();
+    }
+>>>>>>> revert1
   });
 }
 
@@ -145,8 +209,13 @@ function cancelCreateGroup() {
 //   }
 // };
 
+<<<<<<< HEAD
 function changeTypeChat() {
   $("#select-type-chat").bind("change", function (e) {
+=======
+function changeTypeChat(){
+  $("#select-type-chat").bind("change", function() {
+>>>>>>> revert1
     let optionSelected = $("option:selected", this);
     optionSelected.tab("show");
 
@@ -156,6 +225,7 @@ function changeTypeChat() {
       $(".create-group-chat").show();
     }
   });
+<<<<<<< HEAD
 };
 
 function changeScreenChat() {
@@ -173,6 +243,46 @@ function changeScreenChat() {
   });
 };
 
+=======
+}
+
+function changeScreenChat() {
+  $(".room-chat").unbind("click").on("click", function() {
+    let divId = $(this).find("li").data("chat");
+
+    $(".person").removeClass("active");
+    $(`.person[data-chat=${divId}]`).addClass("active");
+    $(this).tab("show");
+
+    //cấu hình thanh cuộn bên vùng chat bên phải
+    nineScrollRight(divId);
+    
+    // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
+    enableEmojioneArea(divId);
+
+    // bật lắng nghe DOM cho việc chat tin nhắn hình ảnh
+    imageChat(divId);
+
+    // bật lắng nghe DOM cho việc chat tin nhắn tệp đính kèm
+    attachmentChat(divId);
+  });
+};
+
+function convertEmoji() {
+  $(".convert-emoji").each(function() {
+    var original = $(this).html();
+    var converted = emojione.toImage(original);
+    $(this).html(converted);
+  });
+};
+
+function bufferToBase64(buffer) {
+  return btoa(
+      new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+    );
+}
+
+>>>>>>> revert1
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -182,8 +292,11 @@ $(document).ready(function() {
 
   // Cấu hình thanh cuộn
   nineScrollLeft();
+<<<<<<< HEAD
 
   
+=======
+>>>>>>> revert1
 
   // Icon loading khi chạy ajax
   ajaxLoading();
@@ -201,12 +314,24 @@ $(document).ready(function() {
   // hien thong bao loi
   // flashMasterNotify();
 
+<<<<<<< HEAD
   // thay đổi kiểu chat
+=======
+  // thay đổi kiểu trò chuyện
+>>>>>>> revert1
   changeTypeChat();
 
   // thay đổi màn hình chat
   changeScreenChat();
 
+<<<<<<< HEAD
   // click vào phần tử đầu khi load trang 
   $("ul.people").find("li")[0].click();
+=======
+  // chuyển các unicode thành hình ảnh biểu tượng cảm xúc
+  convertEmoji();
+
+  $("ul.people").find("a")[0].click();
+
+>>>>>>> revert1
 });

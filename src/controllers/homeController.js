@@ -1,6 +1,9 @@
 import { notification, contact, message } from "./../services/index";
 import { bufferToBase64, lastItemOfArray, convertTimestamp } from "./../helpers/clientHelper";
+<<<<<<< HEAD
 
+=======
+>>>>>>> revert1
 
 let getHome = async (req, res) => {
     // lấy ra 10 thông báo dần nhất
@@ -21,6 +24,7 @@ let getHome = async (req, res) => {
     let contactsRecevied = await contact.getContactsRecevied(req.user._id);
     let countAllContactsRecevied = await contact.countAllContactsRecevied(req.user._id);
 
+<<<<<<< HEAD
     let getAllConversation = await message.getAllConversation(req.user._id);
 
     let allConversations = getAllConversation.allConversations;
@@ -31,6 +35,12 @@ let getHome = async (req, res) => {
 
     // lấy tất cả tin nhắn (với max là 30)
     let allConversationMessages = getAllConversation.allConversationMessage;
+=======
+    let getAllConversationItems = await message.getAllConversationItems(req.user._id);
+
+    // tin nhắn trong các cuộc trò chuyện
+    let allConversationMessages = getAllConversationItems.allConversationMessages;
+>>>>>>> revert1
 
     return res.render("main/home/home", {
         errors: req.flash("errors"),
@@ -44,9 +54,12 @@ let getHome = async (req, res) => {
         countAllContacts: countAllContacts,
         countAllContactsSend: countAllContactsSend,
         countAllContactsRecevied: countAllContactsRecevied,
+<<<<<<< HEAD
         allConversations: allConversations,
         userConversatons: userConversatons,
         groupConversations: groupConversations,
+=======
+>>>>>>> revert1
         allConversationMessages: allConversationMessages,
         bufferToBase64: bufferToBase64,
         lastItemOfArray: lastItemOfArray,

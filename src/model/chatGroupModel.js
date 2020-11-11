@@ -17,12 +17,39 @@ let ChatGroupSchema = new Schema({
 });
 
 ChatGroupSchema.statics = {
+<<<<<<< HEAD
 
     getChatGroups(userId, limit) {
+=======
+    // lấy ra các nhóm trò chuyện
+    getChatGroups(userId, limit) {
+        // console.log(userId);
+        // console.log(limit);
+>>>>>>> revert1
         return this.find({
             "members": {$elemMatch: {"userId": userId}}
         }).sort({"updatedAt": -1}).limit(limit).exec();
     },
+<<<<<<< HEAD
+=======
+
+    getChatGroupById(groupId) {
+        return this.findById(groupId).exec();
+    },
+
+    updateWhenHasNewMessage(groupId, newMessageAmount) {
+        return this.findByIdAndUpdate(groupId, {
+            "messageAmount": newMessageAmount,
+            "updatedAt": Date.now(),
+        }).exec();
+    },
+
+    getChatGroupIdsByUser(userId) {
+        return this.find({
+            "members": {$elemMatch: {"userId": userId}}
+        }, {_id: 1}).exec();
+    },
+>>>>>>> revert1
 };
 
 module.exports = mongoose.model("chat-group", ChatGroupSchema);

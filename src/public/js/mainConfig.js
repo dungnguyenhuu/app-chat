@@ -203,6 +203,9 @@ function changeScreenChat() {
 
     // bật lắng nghe DOM cho việc chat tin nhắn tệp đính kèm
     attachmentChat(divId);
+
+    // bật lắng nghe DOM cho việc gọi video
+    videoChat(divId);
   });
 };
 
@@ -257,4 +260,7 @@ $(document).ready(function() {
 
   $("ul.people").find("a")[0].click();
 
+  $("#video-chat").bind("click", function () {
+    alertify.notify("Chức năng không phù hợp với nhóm trò chuyện", "info", 5);
+  });
 });

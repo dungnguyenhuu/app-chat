@@ -1,4 +1,5 @@
 export const appConfig ={
+    max_event_listener: 30,
     hostname: "localhost",
     port: 8888,
 

@@ -82,6 +82,7 @@
                             </a>
                         </span>
                     </div>
+
                     <div class="content-chat">
                         <div class="chat" data-chat="<%= conversation._id %>">
                             <% conversation.messages.forEach(function(message) { %>
@@ -131,6 +132,7 @@
                             <% }) %>                            
                         </div>
                     </div>
+
                     <div class="write" data-chat="<%= conversation._id %>">
                         <input type="text" class="write-chat chat-in-group" id="write-chat-<%= conversation._id %>" data-chat="<%= conversation._id %>">
                         <div class="icons">
@@ -144,10 +146,9 @@
 >>>>>>> revert1
                                 <i class="fa fa-paperclip"></i>
                             </label>
-                            <a href="#streamModal" id="video-chat" class="video-chat" data-chat="<%= conversation._id %>" data-toggle="modal">
+                           <!--  <a href="javascript:void(0)" id="video-chat" >
                                 <i class="fa fa-video-camera"></i>
-                            </a>
-                            <input type="hidden" id="peer-id" value="">
+                            </a> -->
                         </div>
                     </div>
 <<<<<<< HEAD
@@ -268,7 +269,7 @@
 >>>>>>> revert1
                                 <i class="fa fa-paperclip"></i>
                             </label>
-                            <a href="#streamModal" id="video-chat" class="video-chat" data-chat="<%= conversation._id %>" data-toggle="modal">
+                            <a href="javascript:void(0)" id="video-chat-<%= conversation._id %>" class="video-chat" data-chat="<%= conversation._id %>" data-toggle="modal">
                                 <i class="fa fa-video-camera"></i>
                             </a>
                             <input type="hidden" id="peer-id" value="">

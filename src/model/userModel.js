@@ -89,6 +89,21 @@ UserSchema.statics = {
             ]
         }, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
     },
+
+    findAllToAddGroupChat(friendIds, keyword){
+        return this.find({
+            $and: [ // điều kiện and
+                {"_id": {$in: friendIds}}, // tìm id ko có trong mảng
+                {"local.isActive": true}, // tài khoản đã active
+                {$or: [ 
+                    {"username": {"$regex": new RegExp(keyword, "i") }}, // tên gần đúng, không phân biệt chữ hoa, chữ thường
+                    {"local.email": {"$regex": new RegExp(keyword, "i") }},
+                    {"facebook.email": {"$regex": new RegExp(keyword, "i") }},
+                    {"google.email": {"$regex": new RegExp(keyword, "i") }},
+                ]},
+            ]
+        }, {_id: 1, username: 1, address: 1, avatar: 1}).exec();
+    },
 };
 
 UserSchema.methods = {

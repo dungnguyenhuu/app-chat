@@ -270,6 +270,23 @@ let readMoreContactsReceived = (currentUserId, skipNumberContactReceived) => {
     });
 };
 
+// tìm kiếm bạn bè để thêm vào nhóm trò chuyện
+let searchFriends = (currentUserId, keyword) => {
+    return new Promise (async (resolve, reject) => {
+        let friendIds = [];
+        let friends = await ContactModel.getFriends(currentUserId);
+        friends.forEach((item) => {
+            friendIds.push(item.userId);
+            friendIds.push(item.contactId);
+        });
+        friendIds = _.unionBy(friendIds);
+        friendIds = friendIds.filter(userId => userId != currentUserId);
+        
+        let users = await UserModel.findAllToAddGroupChat(friendIds, keyword);
+        resolve(users);        
+    });
+};
+
 module.exports = {
     findUsersContact: findUsersContact,
     addNew: addNew,
@@ -286,4 +303,5 @@ module.exports = {
     readMoreContacts: readMoreContacts,
     readMoreContactsSent: readMoreContactsSent,
     readMoreContactsReceived: readMoreContactsReceived,
+    searchFriends: searchFriends,
 };

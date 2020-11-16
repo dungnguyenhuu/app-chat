@@ -31,7 +31,7 @@ let initRoutes = (app) => {
     router.put("/profile/update-info", auth.checkLoggedIn, userValid.updateInfo, user.updateInfo);
     router.put("/profile/update-pass", auth.checkLoggedIn, userValid.updatePass, user.updatePass);
 
-    router.get("/contact/find-users/:keyword", auth.checkLoggedIn,contactValid.findUserContact,  contact.findUsersContact);
+    router.get("/contact/find-users/:keyword", auth.checkLoggedIn, contactValid.findUserContact, contact.findUsersContact);
     router.post("/contact/add-new", auth.checkLoggedIn, contact.addNew);
     router.delete("/contact/remove-contact", auth.checkLoggedIn, contact.removeContact);
     router.delete("/contact/remove-request-contact-sent", auth.checkLoggedIn, contact.removeRequestContactSent);
@@ -48,7 +48,7 @@ let initRoutes = (app) => {
     router.post("/message/add-new-image", auth.checkLoggedIn, message.addNewImage);
     router.post("/message/add-new-attachment", auth.checkLoggedIn, message.addNewAttachment);
 
-    
+    router.get("/contact/search-friends/:keyword", auth.checkLoggedIn, contactValid.findUserContact, contact.searchFriends);
 
     return app.use("/", router);
 };

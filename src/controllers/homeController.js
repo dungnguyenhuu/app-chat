@@ -1,8 +1,42 @@
 import { notification, contact, message } from "./../services/index";
 import { bufferToBase64, lastItemOfArray, convertTimestamp } from "./../helpers/clientHelper";
+import request from "request";
+
+let getICETurnServer = () => {
+    return new Promise(async (resolve, reject) => {
+        // // Node Get ICE STUN and TURN list
+        // let o = {
+        //     format: "urls"
+        // };
+
+        // let bodyString = JSON.stringify(o);
+        // let options = {
+        //     url: "https://global.xirsys.net/_turn/app-chat",
+        //     // host: "global.xirsys.net",
+        //     // path: "/_turn/app-chat",
+        //     method: "PUT",
+        //     headers: {
+        //         "Authorization": "Basic " + Buffer.from("dungnh:182dbc98-2724-11eb-8d64-0242ac150002").toString("base64"),
+        //         "Content-Type": "application/json",
+        //         "Content-Length": bodyString.length
+        //     }
+        // };
+
+        // // call request to get ICE list of turn server
+        // request(options, (error, response, body) => {
+        //     if(error) {
+        //         console.log("error when get list ICE: " + error);
+        //         return reject(error);
+        //     }
+        //     let bodyJson = JSON.parse(body);
+        //     resolve(bodyJson.v.iceServers);
+        // });
+        resolve([]);
+    });
+}
 
 let getHome = async (req, res) => {
-    // lấy ra 10 thông báo dần nhất
+    // lấy ra 10 thông báo gần nhất
     let notifications = await notification.getNotifications(req.user._id);
 
     //số thông báo chưa đọc
@@ -25,6 +59,9 @@ let getHome = async (req, res) => {
     // tin nhắn trong các cuộc trò chuyện
     let allConversationMessages = getAllConversationItems.allConversationMessages;
 
+    // get ICE list from xirsys turn server
+    let iceServerList = await getICETurnServer();
+
     return res.render("main/home/home", {
         errors: req.flash("errors"),
         success: req.flash("success"),
@@ -41,6 +78,7 @@ let getHome = async (req, res) => {
         bufferToBase64: bufferToBase64,
         lastItemOfArray: lastItemOfArray,
         convertTimestamp: convertTimestamp,
+        iceServerList: JSON.stringify(iceServerList),
     });
 };
 

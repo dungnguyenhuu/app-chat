@@ -21,7 +21,7 @@
 <body onload="spinLoaded()">
     <!--Icon loader-->
     <div id="loader"></div>
-    
+    <input type="hidden" id="ice-server-list" value="<%= iceServerList %>">
     <!-- alert -->
     <%- include("alert/alert") %>
 
@@ -70,6 +70,7 @@
     <script src="js/imageChat.js"></script>
     <script src="js/attachmentChat.js"></script>
     <script src="js/videoChat.js"></script>
+    <script src="js/userOnlineOffline.js"></script>
 
     
     <!-- include('../contacts/contactsModal'); -->

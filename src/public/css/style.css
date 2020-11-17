@@ -1271,7 +1271,7 @@ label:focus,
   border-color: #ccc;
 }
 
-.list-user-added button#create-group-chat {
+.list-user-added button#btn-create-group-chat {
   border-color: #2ACC77;
   background-color: #2ACC77;
 }

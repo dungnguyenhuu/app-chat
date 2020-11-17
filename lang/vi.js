@@ -9,6 +9,8 @@ export const transValidation = {
     upadate_phone: "Số điện thoại Việt Nam bắt đầu bằng số 0, giới hạn trong khoảng 10-11 kí tự",
     keyword_find_user: "Lỗi từ khóa tìm kiếm, không được có kí tự đặc biệt",
     message_text_emoji_incorrect: "Tin nhắn không hợp lệ, tối thiểu 1 kí tự, tối đa 400 kí tự",
+    add_new_group_user_incorrect: "Chọn tối thiểu 2 người để tạo nhóm",
+    add_new_group_name_incorrect: "Tên nhóm giới hạn từ 5 đến 30 kí tự",
 };
 
 export const transErrors = {

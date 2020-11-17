@@ -1,5 +1,5 @@
-import {validationResult} from "express-validator/check";
-import {contact} from "./../services/index";
+import { validationResult } from "express-validator/check";
+import { contact } from "./../services/index";
 
 // tìm kiếm người dùng để kết bạn
 let findUsersContact = async (req, res) => {

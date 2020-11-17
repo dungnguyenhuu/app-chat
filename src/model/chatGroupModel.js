@@ -17,6 +17,11 @@ let ChatGroupSchema = new Schema({
 });
 
 ChatGroupSchema.statics = {
+     // tạo bản ghi mới
+     createNew(item) {
+        return this.create(item);
+    },
+    
     // lấy ra các nhóm trò chuyện
     getChatGroups(userId, limit) {
         // console.log(userId);

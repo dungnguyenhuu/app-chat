@@ -1339,7 +1339,10 @@ label:focus,
 .read-more-notif,
 .read-more-contacts,
 .read-more-contactsSend,
-.read-more-contactsRecevied {
+.read-more-contactsRecevied,
+.read-more-all-chat,
+.read-more-user-chat,
+.read-more-group-chat {
   text-align: center;
 }
 
@@ -1359,4 +1362,8 @@ label:focus,
 .message-time-realtime {
   color: black !important;
   font-weight: bold;
+}
+
+.tab-content > .active {
+  background-color: #FFF;
 }

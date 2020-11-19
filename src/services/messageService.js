@@ -7,7 +7,7 @@ import { transErrors } from "./../../lang/vi";
 import { appConfig } from "./../config/appConfig";
 import fsExtra from "fs-extra";
 
-const LIMIT_CONVERSATION_TAKEN = 15;
+const LIMIT_CONVERSATION_TAKEN = 2;
 const LIMIT_MESSAGES_TAKEN = 30;
 
 let getAllConversationItems = (currentUserId) => {
@@ -286,9 +286,67 @@ let addNewattAchment = (sender, receiverId, messageVal, isChatGroup) => {
     });
 };
 
+// lấy thêm contact
+let readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
+    return new Promise (async (resolve, reject) => {
+        try {
+            let contacts = await ContactModel.readMoreContacts(currentUserId, skipPersonal, LIMIT_CONVERSATION_TAKEN);
+
+            let userConversationsPromise = contacts.map(async (contact) => {
+                if(contact.contactId == currentUserId) {
+                    let getUserContacts =  await UserModel.getNomalDataUserById(contact.userId);
+                    getUserContacts.updatedAt = contact.updatedAt;
+                    return getUserContacts;
+                } else {
+                    let getUserContacts = await UserModel.getNomalDataUserById(contact.contactId);
+                    getUserContacts.updatedAt = contact.updatedAt;
+                    return getUserContacts;
+                }
+            });
+            // bạn bè trò chuyện
+            let userConversations = await Promise.all(userConversationsPromise);
+
+            // nhóm trò chuyện
+            let groupConversations = await ChatGroupModel.readMoreChatGroups(currentUserId, skipGroup, LIMIT_CONVERSATION_TAKEN);
+            // tất cả trò chuyện (cả nhóm và bạn bè)
+            let allConversations = userConversations.concat(groupConversations);
+            // sắp xếp lại các cuộc trò chuyện theo update mới nhất
+            allConversations = _.sortBy(allConversations, (item) => {
+                return -item.updatedAt;
+            });
+            // console.log(allConversations);
+            
+            // lấy tin nhắn trong từng cuộc trò chuyện
+            let allConversationMessagesPromise = allConversations.map(async (conversation) => {
+                conversation = conversation.toObject();
+
+                if(conversation.members) {
+                    let getMessages = await MessageModel.model.getMessagesGroup(conversation._id, LIMIT_MESSAGES_TAKEN);
+                    conversation.messages = _.reverse(getMessages);
+                } else {
+                    let getMessages = await MessageModel.model.getMessagesPersonal(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
+                    conversation.messages = _.reverse(getMessages);
+                }
+                return conversation;
+            });
+
+            let allConversationMessages = await Promise.all(allConversationMessagesPromise);
+            // sắp xếp lại
+            allConversationMessages = _.sortBy(allConversationMessages, (item) => {
+                return -item.updateAt;
+            });
+
+            resolve(allConversationMessages);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
 module.exports =  {
     getAllConversationItems: getAllConversationItems,
     addNewTextEmoji: addNewTextEmoji,
     addNewImage: addNewImage, 
-    addNewattAchment: addNewattAchment
+    addNewattAchment: addNewattAchment, 
+    readMoreAllChat: readMoreAllChat,
 };

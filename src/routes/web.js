@@ -47,6 +47,7 @@ let initRoutes = (app) => {
     router.post("/message/add-new-text-emiji", auth.checkLoggedIn, messageValid.checkMessageLength, message.addNewTextEmoji);
     router.post("/message/add-new-image", auth.checkLoggedIn, message.addNewImage);
     router.post("/message/add-new-attachment", auth.checkLoggedIn, message.addNewAttachment);
+    router.get("/message/read-more-all-chat", auth.checkLoggedIn, message.readMoreAllChat);
 
     router.get("/contact/search-friends/:keyword", auth.checkLoggedIn, contactValid.findUserContact, contact.searchFriends);
     router.post("/group-chat/add-new", auth.checkLoggedIn, groupChatValid.addNewGroup, groupChat.addNewGroup);

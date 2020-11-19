@@ -10,6 +10,10 @@ function nineScrollLeft() {
   });
 }
 
+function resizeNineScrollLeft() {
+  $(".left").getNiceScroll().resize();
+}
+
 function nineScrollRight(divId) {
   $(`.right .chat[data-chat = ${divId}]`).niceScroll({
     smoothscroll: true,
@@ -193,8 +197,8 @@ function convertEmoji() {
 
 function bufferToBase64(buffer) {
   return btoa(
-      new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
-    );
+    new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+  );
 }
 
 $(document).ready(function() {

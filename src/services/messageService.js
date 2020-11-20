@@ -7,7 +7,7 @@ import { transErrors } from "./../../lang/vi";
 import { appConfig } from "./../config/appConfig";
 import fsExtra from "fs-extra";
 
-const LIMIT_CONVERSATION_TAKEN = 1;
+const LIMIT_CONVERSATION_TAKEN = 15;
 const LIMIT_MESSAGES_TAKEN = 30;
 
 let getAllConversationItems = (currentUserId) => {
@@ -410,6 +410,27 @@ let readMoreGroupChat = (currentUserId, skipGroup) => {
     });
 };
 
+let readMore = (currentUserId, skipMessage, targetId, chatInGroup) => {
+    return new Promise (async (resolve, reject) => {
+        try {
+            //  message in gorup chat
+            if(chatInGroup) {
+                let getMessages = await MessageModel.model.readMoreMessagesGroup(targetId, skipMessage, LIMIT_MESSAGES_TAKEN);
+                getMessages = _.reverse(getMessages);
+                return resolve(getMessages);
+            } 
+
+            // message in personal
+            let getMessages = await MessageModel.model.readMoreMessagesPersonal(currentUserId, targetId, skipMessage, LIMIT_MESSAGES_TAKEN);
+            getMessages = _.reverse(getMessages);
+            return resolve(getMessages);
+        
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+
 module.exports =  {
     getAllConversationItems: getAllConversationItems,
     addNewTextEmoji: addNewTextEmoji,
@@ -418,4 +439,5 @@ module.exports =  {
     readMoreAllChat: readMoreAllChat,
     readMoreUserChat: readMoreUserChat,
     readMoreGroupChat: readMoreGroupChat,
+    readMore: readMore
 };

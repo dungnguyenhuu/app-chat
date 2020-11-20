@@ -1367,3 +1367,9 @@ label:focus,
 .tab-content > .active {
   background-color: #FFF;
 }
+
+.message-loading {
+  display: block;
+  width: 80px;
+  margin: 0 auto;
+}

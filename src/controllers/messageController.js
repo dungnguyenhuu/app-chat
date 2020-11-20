@@ -249,6 +249,37 @@ let readMoreGroupChat = async (req, res) => {
     }
 };
 
+let readMore = async (req, res) => {
+    try {
+        // số user đã lấy
+        let skipMessage = +(req.query.skipMessage);
+        let targetId = req.query.targetId;
+        let chatInGroup = (req.query.chatInGroup === "true");
+
+        // lấy thêm user
+        let newMessages = await message.readMore(req.user._id, skipMessage, targetId, chatInGroup);
+        
+        let dataToRender = {
+            newMessages: newMessages,
+            bufferToBase64: bufferToBase64,
+            user: req.user,
+        }
+        let rightSideData = await renderFile("src/views/main/readMoreMessage/_rightSide.ejs", dataToRender);
+        let imageModalData = await renderFile("src/views/main/readMoreMessage/_imageModal.ejs", dataToRender);
+        let attachmentModalData = await renderFile("src/views/main/readMoreMessage/_attachmentModal.ejs", dataToRender);
+
+        return res.status(200).send({
+            rightSideData: rightSideData,
+            imageModalData: imageModalData,
+            attachmentModalData: attachmentModalData,
+        });
+    } catch (error) {
+        console.log("loi o messageController");
+        console.log(error);
+        return res.status(500).send(error);
+    }
+};
+
 module.exports = {
     addNewTextEmoji: addNewTextEmoji,
     addNewImage: addNewImage,
@@ -256,4 +287,5 @@ module.exports = {
     readMoreAllChat: readMoreAllChat,
     readMoreUserChat: readMoreUserChat,
     readMoreGroupChat: readMoreGroupChat,
+    readMore: readMore,
 };

@@ -50,6 +50,7 @@ let initRoutes = (app) => {
     router.get("/message/read-more-all-chat", auth.checkLoggedIn, message.readMoreAllChat);
     router.get("/message/read-more-user-chat", auth.checkLoggedIn, message.readMoreUserChat);
     router.get("/message/read-more-group-chat", auth.checkLoggedIn, message.readMoreGroupChat);
+    router.get("/message/read-more?", auth.checkLoggedIn, message.readMore);
     
 
     router.get("/contact/search-friends/:keyword", auth.checkLoggedIn, contactValid.findUserContact, contact.searchFriends);

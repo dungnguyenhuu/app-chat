@@ -144,7 +144,7 @@ function callCreatedGroup() {
                         <span class="chat-menu-right">
                             <a href="javascript:void(0)" class = "number-members" data-toggle="modal">
                                 <span class="show-number-member">
-                                ${data.groupChat.userAmount}
+                                    ${data.groupChat.userAmount}
                                 </span>
                                 <i class="fa fa-users"></i>
                             </a>
@@ -152,7 +152,7 @@ function callCreatedGroup() {
                     </div>
 
                     <div class="content-chat">
-                        <div class="chat" data-chat="${data.groupChat._id}">
+                        <div class="chat chat-in-group" data-chat="${data.groupChat._id}">
                         </div>
                     </div>
 
@@ -295,7 +295,7 @@ $(document).ready(function () {
                 <span class="chat-menu-right">
                     <a href="javascript:void(0)" class = "number-members" data-toggle="modal">
                         <span class="show-number-member">
-                        ${response.groupChat.userAmount}
+                            ${response.groupChat.userAmount}
                         </span>
                         <i class="fa fa-users"></i>
                     </a>
@@ -303,7 +303,7 @@ $(document).ready(function () {
             </div>
 
             <div class="content-chat">
-                <div class="chat" data-chat="${response.groupChat._id}">
+                <div class="chat chat-in-group" data-chat="${response.groupChat._id}">
                 </div>
             </div>
 

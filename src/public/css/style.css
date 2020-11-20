@@ -1107,15 +1107,10 @@ label:focus,
   float: right;
 }
 
-<<<<<<< HEAD
-.right .bubble.me img.avatar-small {
-  margin-left: 10px;
-=======
 .right .bubble.me img.avatar-small{
   position: absolute;
   right: -32px;
   display: none;
->>>>>>> revert1
 }
 
 .right .bubble.you img {
@@ -1123,12 +1118,8 @@ label:focus,
 }
 
 .right .bubble.you img.avatar-small {
-<<<<<<< HEAD
-  margin-right: 10px;
-=======
   position: absolute;
   left: -35px;
->>>>>>> revert1
 }
 
 .right .bubble.me a {
@@ -1280,7 +1271,7 @@ label:focus,
   border-color: #ccc;
 }
 
-.list-user-added button#create-group-chat {
+.list-user-added button#btn-create-group-chat {
   border-color: #2ACC77;
   background-color: #2ACC77;
 }
@@ -1359,19 +1350,10 @@ label:focus,
   display: inline-block !important;
 }
 
-<<<<<<< HEAD
-.tab-content > .tab-pane{
-  background-color: white;
-}
-
-=======
->>>>>>> revert1
 #screen-chat {
   width: 100%;
   height: 100%;
 }
-<<<<<<< HEAD
-=======
 
 .show-number-member {
   color: #2c3e50 !important;
@@ -1381,4 +1363,13 @@ label:focus,
   color: black !important;
   font-weight: bold;
 }
->>>>>>> revert1
+
+.tab-content > .active {
+  background-color: #FFF;
+}
+
+.message-loading {
+  display: block;
+  width: 80px;
+  margin: 0 auto;
+}

@@ -1,6 +1,6 @@
 import express from "express";
-import { home, auth, user, contact, notification, message } from "./../controllers/index";
-import { authValid, userValid, contactValid, messageValid } from "./../validation/index";
+import { home, auth, user, contact, notification, message, groupChat } from "./../controllers/index";
+import { authValid, userValid, contactValid, messageValid, groupChatValid } from "./../validation/index";
 import passport from "passport"
 import initPassportLocal from "./../controllers/passportController/local";
 
@@ -31,7 +31,7 @@ let initRoutes = (app) => {
     router.put("/profile/update-info", auth.checkLoggedIn, userValid.updateInfo, user.updateInfo);
     router.put("/profile/update-pass", auth.checkLoggedIn, userValid.updatePass, user.updatePass);
 
-    router.get("/contact/find-users/:keyword", auth.checkLoggedIn,contactValid.findUserContact,  contact.findUsersContact);
+    router.get("/contact/find-users/:keyword", auth.checkLoggedIn, contactValid.findUserContact, contact.findUsersContact);
     router.post("/contact/add-new", auth.checkLoggedIn, contact.addNew);
     router.delete("/contact/remove-contact", auth.checkLoggedIn, contact.removeContact);
     router.delete("/contact/remove-request-contact-sent", auth.checkLoggedIn, contact.removeRequestContactSent);
@@ -47,8 +47,14 @@ let initRoutes = (app) => {
     router.post("/message/add-new-text-emiji", auth.checkLoggedIn, messageValid.checkMessageLength, message.addNewTextEmoji);
     router.post("/message/add-new-image", auth.checkLoggedIn, message.addNewImage);
     router.post("/message/add-new-attachment", auth.checkLoggedIn, message.addNewAttachment);
-
+    router.get("/message/read-more-all-chat", auth.checkLoggedIn, message.readMoreAllChat);
+    router.get("/message/read-more-user-chat", auth.checkLoggedIn, message.readMoreUserChat);
+    router.get("/message/read-more-group-chat", auth.checkLoggedIn, message.readMoreGroupChat);
+    router.get("/message/read-more?", auth.checkLoggedIn, message.readMore);
     
+
+    router.get("/contact/search-friends/:keyword", auth.checkLoggedIn, contactValid.findUserContact, contact.searchFriends);
+    router.post("/group-chat/add-new", auth.checkLoggedIn, groupChatValid.addNewGroup, groupChat.addNewGroup);
 
     return app.use("/", router);
 };

@@ -27,6 +27,28 @@ function removeContact() {
                         $("#contacts").find(`ul li[data-uid = ${targetId}]`).remove();
                         decreaseNumberNotifContact("count-contacts"); // js/caculateNotif.js
                         socket.emit("remove-contact", {contactId: targetId});
+
+                        /** Xóa đi ở phần leftside và rightside  */
+                        // 0. check active
+                        let checkActive = $("#all-chat").find(`li[data-chat=${targetId}]`).hasClass("active");
+
+                        // 1. xóa ở leftSide.ejs
+                        $("#all-chat").find(`ul a[href = "#uid_${ targetId }"]`).remove();
+                        $("#user-chat").find(`ul a[href = "#uid_${ targetId }"]`).remove();
+
+                        // 2. xóa bên rightside.ejs
+                        $("#screen-chat").find(`div#to_${ targetId }`).remove();
+
+                        // 3. xóa imageModal
+                        $("body").find(`div#imagesModal_${ targetId }`).remove();
+
+                        // 4. xóa attachmentModal
+                        $("body").find(`div#attachmentsModal_${ targetId }`).remove();
+
+                        // 5. click first conversation
+                        if(checkActive) {
+                            $("ul.people").find("a")[0].click();
+                        }
                     }
                 }
             });
@@ -41,8 +63,27 @@ socket.on("response-remove-contact", function(user) {
     $("#contacts").find(`ul li[data-uid = ${user.id}]`).remove();
     decreaseNumberNotifContact("count-contacts"); // js/caculateNotif.js
 
-    /* xóa tiếp user ở phần chat */
+    /** Xóa đi ở phần leftside và rightside  */
+    // 0. check active
+    let checkActive = $("#all-chat").find(`li[data-chat=${ user.id }]`).hasClass("active");
 
+    // 1. xóa ở leftSide.ejs
+    $("#all-chat").find(`ul a[href = "#uid_${ user.id }"]`).remove();
+    $("#user-chat").find(`ul a[href = "#uid_${ user.id }"]`).remove();
+
+    // 2. xóa bên rightside.ejs
+    $("#screen-chat").find(`div#to_${ user.id }`).remove();
+
+    // 3. xóa imageModal
+    $("body").find(`div#imagesModal_${ user.id }`).remove();
+
+    // 4. xóa attachmentModal
+    $("body").find(`div#attachmentsModal_${ user.id }`).remove();
+
+    // 5. click first conversation
+    if(checkActive) {
+        $("ul.people").find("a")[0].click();
+    }
 });
 
 $(document).ready(function () {

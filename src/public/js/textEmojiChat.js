@@ -49,7 +49,8 @@ function textEmojiChat (divId) {
                     $(".emojionearea").find(".emojionearea-editor").text("");
 
                     // 4. cập nhập vùng preview tin nhắn và time bên leftside
-                    $(`.person[data-chat=${divId}]`).find("span.time").removeClass("message-time-realtime").html(moment(data.createdAt).local("vi").startOf("seconds").fromNow());
+                    $(`.person[data-chat=${divId}]`).find("span.time").removeClass("message-time-realtime")
+                        .html(moment(data.createdAt).locale("vi").startOf("seconds").fromNow());
                     $(`.person[data-chat=${divId}]`).find("span.preview").html(emojione.toImage(data.text));
 
                     // 5. đưa contact lên đầu bên leftside
@@ -103,11 +104,13 @@ $(document).ready(function () {
             $(`.right .chat[data-chat=${divId}]`).append(messageOfYou);
             nineScrollRight(divId);
             // increaseNumberMessageGroup(divId);
-            $(`.person[data-chat=${divId}]`).find("span.time").addClass("message-time-realtime").html(moment(response.message.createdAt).local("vi").startOf("seconds").fromNow());
+            $(`.person[data-chat=${divId}]`).find("span.time").addClass("message-time-realtime")
+                .html(moment(response.message.createdAt).locale("vi").startOf("seconds").fromNow());
         }
 
         // 4. cập nhập vùng preview tin nhắn và time bên leftside
-        $(`.person[data-chat=${divId}]`).find("span.time").html(moment(response.message.createdAt).local("vi").startOf("seconds").fromNow());
+        $(`.person[data-chat=${divId}]`).find("span.time")
+            .html(moment(response.message.createdAt).locale("vi").startOf("seconds").fromNow());
         $(`.person[data-chat=${divId}]`).find("span.preview").html(emojione.toImage(response.message.text));
 
         // 5. đưa contact lên đầu bên leftside

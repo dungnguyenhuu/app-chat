@@ -183,9 +183,77 @@ let readMoreAllChat =  async (req, res) => {
     }
 };
 
+let readMoreUserChat = async (req, res) => {
+    try {
+        // số user đã lấy
+        let skipPersonal = +(req.query.skipPersonal);
+
+        // lấy thêm user
+        let newUserConversations = await message.readMoreUserChat(req.user._id, skipPersonal);
+        
+        let dataToRender = {
+            newAllConversations: newUserConversations,
+            lastItemOfArray: lastItemOfArray,
+            convertTimestamp: convertTimestamp,
+            bufferToBase64: bufferToBase64,
+            user: req.user,
+        }
+        let leftSideData = await renderFile("src/views/main/readMoreConversation/_leftSide.ejs", dataToRender);
+        let rightSideData = await renderFile("src/views/main/readMoreConversation/_rightSide.ejs", dataToRender);
+        let imageModalData = await renderFile("src/views/main/readMoreConversation/_imageModal.ejs", dataToRender);
+        let attachmentModalData = await renderFile("src/views/main/readMoreConversation/_attachmentModal.ejs", dataToRender);
+
+        return res.status(200).send({
+            leftSideData: leftSideData,
+            rightSideData: rightSideData,
+            imageModalData: imageModalData,
+            attachmentModalData: attachmentModalData,
+        });
+    } catch (error) {
+        console.log("loi o messageController");
+        console.log(error);
+        return res.status(500).send(error);
+    }
+};
+
+let readMoreGroupChat = async (req, res) => {
+    try {
+        // số user đã lấy
+        let skipGroup = +(req.query.skipGroup)
+
+        // lấy thêm user
+        let groupAllConversations = await message.readMoreGroupChat(req.user._id, skipGroup);
+        
+        let dataToRender = {
+            newAllConversations: groupAllConversations,
+            lastItemOfArray: lastItemOfArray,
+            convertTimestamp: convertTimestamp,
+            bufferToBase64: bufferToBase64,
+            user: req.user,
+        }
+        let leftSideData = await renderFile("src/views/main/readMoreConversation/_leftSide.ejs", dataToRender);
+        let rightSideData = await renderFile("src/views/main/readMoreConversation/_rightSide.ejs", dataToRender);
+        let imageModalData = await renderFile("src/views/main/readMoreConversation/_imageModal.ejs", dataToRender);
+        let attachmentModalData = await renderFile("src/views/main/readMoreConversation/_attachmentModal.ejs", dataToRender);
+
+        return res.status(200).send({
+            leftSideData: leftSideData,
+            rightSideData: rightSideData,
+            imageModalData: imageModalData,
+            attachmentModalData: attachmentModalData,
+        });
+    } catch (error) {
+        console.log("loi o messageController");
+        console.log(error);
+        return res.status(500).send(error);
+    }
+};
+
 module.exports = {
     addNewTextEmoji: addNewTextEmoji,
     addNewImage: addNewImage,
     addNewAttachment: addNewAttachment,
     readMoreAllChat: readMoreAllChat,
+    readMoreUserChat: readMoreUserChat,
+    readMoreGroupChat: readMoreGroupChat,
 };

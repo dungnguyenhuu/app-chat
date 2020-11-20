@@ -1,6 +1,5 @@
 import { notification, contact, message } from "./../services/index";
 import { bufferToBase64, lastItemOfArray, convertTimestamp } from "./../helpers/clientHelper";
-import request from "request";
 
 let getICETurnServer = () => {
     return new Promise(async (resolve, reject) => {

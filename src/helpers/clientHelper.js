@@ -16,5 +16,5 @@ export let convertTimestamp = (timestamp) => {
     if(!timestamp){
         return "";
     }
-    return moment(timestamp).local("vi").startOf("seconds").fromNow();
+    return moment(timestamp).locale("vi").startOf("seconds").fromNow();
 };

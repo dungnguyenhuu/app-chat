@@ -184,6 +184,10 @@ function changeScreenChat() {
 
     // bật lắng nghe DOM cho việc gọi video
     videoChat(divId);
+
+    // zoom img
+    zoomImageChat(divId);
+
   });
 };
 
@@ -199,6 +203,41 @@ function bufferToBase64(buffer) {
   return btoa(
     new Uint8Array(buffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
   );
+}
+
+function zoomImageChat(divId) {
+  $(".show-image-chat").unbind("click").on("click", function() {
+    $(`#img-chat-modal-${divId}`).css("display", "block");
+    $(`#img-chat-modal-content-${divId}`).attr("src", $(this)[0].src);
+
+    $(`#img-chat-modal-${divId}`).on("click", function() {
+      $(this).css("display", "none");
+    });
+  });
+}
+
+function notYetConversations() {
+  if(!$("ul.people").find("a").length) {
+    Swal.fire({
+      type: "info",
+      title: "Bạn chưa có bạn bè? Hãy tìm kiếm bạn bè để trò chuyện!",
+      showCancelButton: false,
+      confirmButtonColor: "#2ECC71",
+      confirmButtonText: "Đồng ý",
+    }).then((result) => {
+      $("#contactsModal").modal("show");
+    });
+  }
+}
+
+function userTalk() {
+  $(".user-talk").unbind("click").on("click", function() {
+    let divId = $(this).data("uid");
+    // console.log(divId);
+    $("ul.people").find(`a[href="#uid_${divId}"]`).click();
+    // $("#contactsModal").modal("hide");
+    $(this).closest("div.modal").modal("hide");
+  });
 }
 
 $(document).ready(function() {
@@ -230,7 +269,13 @@ $(document).ready(function() {
   // chuyển các unicode thành hình ảnh biểu tượng cảm xúc
   convertEmoji();
 
-  $("ul.people").find("a")[0].click();
+  notYetConversations();
+
+  userTalk();
+
+  if($("ul.people").find("a").length) {
+    $("ul.people").find("a")[0].click();
+  }
 
   $("#video-chat").bind("click", function () {
     alertify.notify("Chức năng không phù hợp với nhóm trò chuyện", "info", 5);

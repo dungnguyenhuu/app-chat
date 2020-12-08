@@ -30,6 +30,9 @@ function renderViewChat(idChat, data) {
 
     // 9. check online
     socket.emit("check-status");
+
+    // 10. read more message
+    readMoreMessage();
 }
 
 $(document).ready(function () {

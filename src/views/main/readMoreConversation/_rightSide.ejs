@@ -52,6 +52,11 @@
                                 <img src="images/users/<%= message.sender.avatar %>" alt="" class="avatar-small" title="<%= message.sender.name %>">
                                 <img src="data:<%= message.file.contentType %>; base64, <%= bufferToBase64(message.file.data) %>" class="show-image-chat">
                             </div>
+                            <!-- The Modal -->
+                            <div id="img-chat-modal-<%= conversation._id %>" class="modal-zoom-img">                                        
+                                <!-- Modal Content (The Image) -->
+                                <img class="modal-zoom-img-content" id="img-chat-modal-content-<%= conversation._id %>">
+                            </div>
                         <% } %>
                         <% if(message.messageType === "file") { %>
                             <div class="bubble <% if(message.senderId == user._id) { %> me <% } else {%> you <%} %> bubble-attachment-file" 
@@ -121,6 +126,11 @@
                             <div class="bubble <% if(message.senderId == user._id) { %> me <% } else {%> you <%} %> bubble-image-file" 
                                 data-mess-id="<%= message._id %>">
                                 <img src="data:<%= message.file.contentType %>; base64, <%= bufferToBase64(message.file.data) %>" class="show-image-chat">
+                            </div>
+                            <!-- The Modal -->
+                            <div id="img-chat-modal-<%= conversation._id %>" class="modal-zoom-img">                                        
+                                <!-- Modal Content (The Image) -->
+                                <img class="modal-zoom-img-content" id="img-chat-modal-content-<%= conversation._id %>">
                             </div>
                         <% } %>
                         <% if(message.messageType === "file") { %>

@@ -2,7 +2,7 @@ import ContactModel from "./../model/contactModel";
 import UserModel from "./../model/userModel";
 import ChatGroupModel from "./../model/chatGroupModel";
 import MessageModel from "./../model/messageModel";
-import _ from "lodash";
+import _, { conforms } from "lodash";
 import { transErrors } from "./../../lang/vi";
 import { appConfig } from "./../config/appConfig";
 import fsExtra from "fs-extra";
@@ -29,6 +29,26 @@ let getAllConversationItems = (currentUserId) => {
             let userConversations = await Promise.all(userConversationsPromise);
             // nhóm trò chuyện
             let groupConversations = await ChatGroupModel.getChatGroups(currentUserId, LIMIT_CONVERSATION_TAKEN);
+            let listMembersInfo = groupConversations.map(async (groupConversation) => {
+                let arrayMembersInfoPromise = groupConversation.members.map(async (member) => {
+                    let memberInfo = await UserModel.getNomalDataUserById(member.userId);
+                    return memberInfo;
+                });
+                let arrayMembersInfo = await Promise.all(arrayMembersInfoPromise);
+                // console.log(arrayMembersInfo.length);
+                let object = {
+                    createBy: groupConversation.userId,
+                    groupChatId: groupConversation._id,
+                    arrayMembersInfo: arrayMembersInfo
+                }
+                // console.log(object.arrayMembersInfo);
+                // console.log(object);
+                // console.log("-------------------------------------");
+                // listMembersInfo.push(object);
+                return object;
+            });
+            listMembersInfo = await Promise.all(listMembersInfo);
+            // console.log(listMembersInfo);
             // tất cả trò chuyện (cả nhóm và bạn bè)
             let allConversations = userConversations.concat(groupConversations);
             // sắp xếp lại các cuộc trò chuyện theo update mới nhất
@@ -59,6 +79,7 @@ let getAllConversationItems = (currentUserId) => {
 
             resolve({
                 allConversationMessages: allConversationMessages,
+                listMembersInfo: listMembersInfo,
             });
         } catch (error) {
             reject(error);

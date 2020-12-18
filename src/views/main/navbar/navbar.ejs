@@ -6,8 +6,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>                        
             </button>
-            <!-- <a class="navbar-brand" href="https://trungquandev.com/" target="__blank">
-                <img src="images/logo_favicon/logo-trungquandev.png" alt="logo-trungquandev">
+            <!-- <a class="navbar-brand" href="#">
+                <img src="images/logo_favicon/logo-chat.png" alt="logo">
             </a> -->
         </div>
         <div class="col-sm-3 no-padding">
@@ -17,7 +17,26 @@
                     <div id="search-results">
                         <h3>Kết quả</h3>
                         <div class="search_content">
-                            <ul></ul>
+                            <ul>
+                                <% for(var i = 0; i < 10; i++) { %>
+                                    <li class="_contactList" data-uid="<%= user._id %>">
+                                        <div class="contactPanel">
+                                            <div class="user-avatar">
+                                                <img src="images/users/avatar-default.jpg" alt="">
+                                            </div>
+                                            <div class="user-name">
+                                                <p>
+                                                    Dũng Hữu
+                                                </p>
+                                            </div>
+                                            <br>
+                                            <div class="user-address">
+                                                <span>&nbsp; Hà nội</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                <% } %>
+                            </ul>
                         </div>
                     </div>
                 </li>

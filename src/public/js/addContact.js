@@ -52,7 +52,7 @@ socket.on("response-add-new-contact", function(user) {
                                 </div>
                                 <br>
                                 <div class="user-address">
-                                    <span>&nbsp ${ user.address }</span>
+                                    <span>&nbsp; ${ user.address }</span>
                                 </div>
                                 <div class="user-approve-request-contact-received" data-uid="${ user.id }">
                                     Chấp nhận

@@ -58,6 +58,9 @@ let getHome = async (req, res) => {
     // tin nhắn trong các cuộc trò chuyện
     let allConversationMessages = getAllConversationItems.allConversationMessages;
 
+    // lấy thông tin của các thành viên trong nhóm trò chuyện
+    let listMembersInfo = getAllConversationItems.listMembersInfo;
+
     // get ICE list from xirsys turn server
     let iceServerList = await getICETurnServer();
 
@@ -74,6 +77,7 @@ let getHome = async (req, res) => {
         countAllContactsSend: countAllContactsSend,
         countAllContactsRecevied: countAllContactsRecevied,
         allConversationMessages: allConversationMessages,
+        listMembersInfo: listMembersInfo,
         bufferToBase64: bufferToBase64,
         lastItemOfArray: lastItemOfArray,
         convertTimestamp: convertTimestamp,

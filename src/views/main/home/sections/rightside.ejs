@@ -10,7 +10,7 @@
                         <span>To: <span class="name"><%= conversation.name %></span></span>
                         <span class="chat-menu-right">
                             <a href="#attachmentsModal_<%= conversation._id %>" class ="show-attachments" data-toggle="modal">
-                                Tệp đính kèm
+                                Tệp đính kèm &nbsp;
                                 <i class="fa fa-paperclip"></i>
                             </a>
                         </span>
@@ -19,7 +19,7 @@
                         </span>
                         <span class="chat-menu-right">
                             <a href="#imagesModal_<%= conversation._id %>" class = "show-images" data-toggle="modal">
-                                Hình ảnh
+                                Hình ảnh &nbsp;
                                 <i class="fa fa-photo"></i>
                             </a>
                         </span>
@@ -27,9 +27,9 @@
                             <a href="javascript:void(0)">&nbsp;</a>
                         </span>
                         <span class="chat-menu-right">
-                            <a href="javascript:void(0)" class = "number-members" data-toggle="modal">
+                            <a href="#memberModal_<%= conversation._id %>" class = "number-members" data-toggle="modal">
                                 <span class="show-number-member">
-                                    <%= conversation.userAmount %>
+                                    <%= conversation.userAmount %> thành viên&nbsp;
                                 </span>
                                 <i class="fa fa-users"></i>
                             </a>

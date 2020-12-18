@@ -1,0 +1,46 @@
+<% listMembersInfo.forEach(function(groupChat) { %>
+    <div class="modal fade" id="memberModal_<%= groupChat.groupChatId %>" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thành viên trong nhóm</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- <div class="user-talk">
+                        <i class="fa fa-plus-circle"></i>
+                    </div> -->
+                    
+                    <div class="find-user-bottom">
+                        <ul class="contactList">
+                            <% groupChat.arrayMembersInfo.forEach(function(memberInfo) { %>
+                                <li class="_contactList" data-uid="<%= memberInfo._id %>">
+                                    <div class="contactPanel">
+                                        <div class="user-avatar">
+                                            <img src="images/users/<%= memberInfo.avatar %>" alt="">
+                                        </div>
+                                        <div class="user-name">
+                                            <p>
+                                                <%= memberInfo.username %> &nbsp;
+                                                <% if(memberInfo._id == groupChat.createBy) { %>
+                                                    <span style="color:red;">(Người tạo nhóm)</span>
+                                                <% } %>
+                                            </p>
+                                        </div>
+                                        <br>
+                                        <div class="user-address">
+                                            <span>&nbsp; <%= memberInfo.address %></span>
+                                        </div>
+                                        <div class="user-talk" data-uid="<%= memberInfo._id %>">
+                                            Trò chuyện
+                                        </div>
+                                    </div>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<% }) %>
